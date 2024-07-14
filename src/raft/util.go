@@ -71,7 +71,7 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 
 func (rf *Raft) resetElectionTimeOut() {
 	// reset electionTimeOutDuration to a random value between 150 - 300 milliseconds
-	rf.electionTimeOutDuration = time.Millisecond * (time.Duration(rand.Float64())*150 + 150)
+	rf.electionTimeOutDuration = time.Duration(rand.Intn(maxElectionTimeout-minElectionTimeout+1)+minElectionTimeout) * time.Millisecond
 }
 func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)

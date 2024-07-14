@@ -7,3 +7,6 @@ const (
 	candidate
 	leader
 )
+
+var minElectionTimeout int = 150
+var maxElectionTimeout int = 300
