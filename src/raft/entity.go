@@ -30,30 +30,30 @@ type LogEntry struct {
 // field names must start with capital letters!
 type RequestVoteArgs struct {
 	// Your data here (2A, 2B).
-	term         int
-	candidateID  int
-	lastLogIndex int
-	lastLogTerm  int
+	Term         int
+	CandidateID  int
+	LastLogIndex int
+	LastLogTerm  int
 }
 
 // example RequestVote RPC reply structure.
 // field names must start with capital letters!
 type RequestVoteReply struct {
 	// Your data here (2A).
-	term        int
-	voteGranted bool
+	Term        int
+	VoteGranted bool
 }
 
 type AppendEntriesArgs struct {
-	term         int        // leader's term
-	leaderID     int        // so follower can redirect clients
-	prevLogIndex int        // index of log entry immediately preceding new ones
-	prevLogTerm  int        // term of prevLogIndex entry
-	entries      []LogEntry // log entries to store(empty for heartbeat; may send more than one for efficiency)
-	leaderCommit int        // leader's commitIndex
+	Term         int        // leader's term
+	LeaderID     int        // so follower can redirect clients
+	PrevLogIndex int        // index of log entry immediately preceding new ones
+	PrevLogTerm  int        // term of prevLogIndex entry
+	Entries      []LogEntry // log entries to store(empty for heartbeat; may send more than one for efficiency)
+	LeaderCommit int        // leader's commitIndex
 }
 
 type AppendEntriesReply struct {
-	term    int  // currentTerm, for leader to update itself
-	success bool // true if follower contained entry matching prevLogIndex and prevLogTerm
+	Term    int  // currentTerm, for leader to update itself
+	Success bool // true if follower contained entry matching prevLogIndex and prevLogTerm
 }

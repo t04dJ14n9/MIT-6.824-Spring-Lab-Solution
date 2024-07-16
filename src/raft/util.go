@@ -8,7 +8,7 @@ import (
 )
 
 // Debugging
-const Debug = false
+const Debug = true
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
@@ -19,7 +19,7 @@ func DPrintf(format string, a ...interface{}) (n int, err error) {
 
 // Get the last index of self's log, to be modified to adapt to snapshot
 func (rf *Raft) getLastLogIndex() int {
-	return len(rf.log)
+	return len(rf.log) - 1
 }
 
 // return currentTerm and whether this server
@@ -69,9 +69,9 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	return ok
 }
 
-func (rf *Raft) resetElectionTimeOut() {
+func (rf *Raft) resetElectionTimeout() {
 	// reset electionTimeOutDuration to a random value between 150 - 300 milliseconds
-	rf.electionTimeOutDuration = time.Duration(rand.Intn(maxElectionTimeout-minElectionTimeout+1)+minElectionTimeout) * time.Millisecond
+	rf.electionTimeoutDuration = time.Duration(rand.Intn(maxElectionTimeout-minElectionTimeout+1)+minElectionTimeout) * time.Millisecond
 }
 func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)
