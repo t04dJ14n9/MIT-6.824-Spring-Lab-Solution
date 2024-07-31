@@ -49,12 +49,8 @@ type Raft struct {
 	lastApplied int // index of the highest log entry applied to state machine
 
 	// used in election process
-	lastHeartBeatTime        time.Time
-	electionTimeoutDuration  time.Duration // random election timeout: 150ms - 300ms
-	approveCount             int
-	rejectCount              int
-	requestVoteReplyReceiver chan RequestVoteReply
-	requestVoteDone          chan struct{}
+	electionTimeoutDuration time.Duration // random election timeout: 150ms - 300ms
+	electionTimeoutTicker   *time.Ticker
 }
 
 // save Raft's persistent state to stable storage,
@@ -146,7 +142,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 	// fresh election timeout
-	rf.lastHeartBeatTime = time.Now()
 	reply.Term = rf.currentTerm
 	reply.Success = true
 	return
@@ -192,79 +187,96 @@ func (rf *Raft) Kill() {
 // The electionRoutine go routine starts a new election if this peer hasn't received
 // heartsbeats recently.
 func (rf *Raft) electionRoutine() {
-	for rf.killed() == false {
-
-		// Your code here to check if a leader election should
-		// be started and to randomize sleeping time using
-		// time.Sleep().
-
-		if time.Since(rf.lastHeartBeatTime) > rf.electionTimeoutDuration {
-			DPrintf("Peer[%d] election timeout: %+v", rf.me, rf)
-			// initialization
-			rf.mu.Lock()
-			rf.currentTerm += 1
-			rf.role = candidate
-			rf.resetElectionTimeout()
-			rf.votedFor = rf.me
-			// number of peers that approve the vote in current round of election
-			rf.approveCount = 1
-			// number of peers that reject the vode in current round of election
-			rf.rejectCount = 0
-			// start sending votes
-			for i := range rf.peers {
-				if i == rf.me {
-					continue
-				}
-				go rf.requestVoteWorker(i, rf.requestVoteDone, rf.requestVoteReplyReceiver)
+	// Your code here to check if a leader election should
+	// be started and to randomize sleeping time using
+	// time.Sleep().
+	for {
+		<-rf.electionTimeoutTicker.C
+	startElection:
+		// leader does not start an election
+		if rf.killed() || rf.role == leader {
+			continue
+		}
+		DPrintf("Peer[%d] election timeout: %+v", rf.me, rf)
+		rf.mu.Lock()
+		rf.currentTerm += 1
+		rf.role = candidate
+		rf.resetElectionTimeout()
+		rf.votedFor = rf.me
+		rf.mu.Unlock()
+		// number of peers that approve the vote in current round of election
+		approveCount := 1
+		// number of peers that reject the vode in current round of election
+		rejectCount := 0
+		args := RequestVoteArgs{
+			Term:         rf.currentTerm,
+			CandidateID:  rf.me,
+			LastLogIndex: rf.getLastLogIndex(),
+			LastLogTerm:  rf.getLastLogTerm(),
+		}
+		DPrintf("debug")
+		replyChannel := make(chan RequestVoteReply, len(rf.peers))
+		for peer := 0; peer < len(rf.peers); peer++ {
+			if peer == rf.me {
+				continue
 			}
-			for time.Since(rf.lastHeartBeatTime) < rf.electionTimeoutDuration {
-				reply := <-rf.requestVoteReplyReceiver
-				DPrintf("Peer[%d]: requestVote reply received: %+v", rf.me, reply)
+			go rf.sendRequestVote(peer, &args, replyChannel)
+		}
+		for {
+			select {
+			// if electionTimeout happens again while waiting for replies, start election again
+			case <-rf.electionTimeoutTicker.C:
+				goto startElection
+			case reply := <-replyChannel:
+				// if received a reply with higher term, change to follower and reset election timeout
 				if reply.Term > rf.currentTerm {
+					rf.mu.Lock()
 					rf.currentTerm = reply.Term
 					rf.role = follower
-					break
+					rf.resetElectionTimeout()
+					rf.mu.Unlock()
+					rf.electionRoutine()
 				}
 				if reply.VoteGranted {
-					rf.approveCount += 1
+					approveCount += 1
 				} else {
-					rf.rejectCount += 1
+					rejectCount += 1
 				}
-				if rf.approveCount > (len(rf.peers))/2 { // received majority of vote, success
+				if approveCount > len(rf.peers)/2 {
+					rf.mu.Lock()
+					DPrintf("Peer[%d]: turn to leader", rf.me)
 					rf.role = leader
-					break
+					rf.resetElectionTimeout()
+					rf.mu.Unlock()
+					rf.electionRoutine()
 				}
-				if rf.rejectCount >= (len(rf.peers))/2 { // didn't receive majority of vote, fail
+				if rejectCount > len(rf.peers)/2 {
+					rf.mu.Lock()
+					DPrintf("Peer[%d]: turn to follower", rf.me)
 					rf.role = follower
-					break
+					rf.resetElectionTimeout()
+					rf.mu.Unlock()
+					rf.electionRoutine()
 				}
 			}
 		}
+
 	}
 }
 
-func (rf *Raft) requestVoteWorker(target int, done chan struct{}, receiver chan RequestVoteReply) {
-	for {
-		select {
-		case <-done: // this worker routine should be closed
-			return
-		default:
-			args := RequestVoteArgs{
-				Term:         rf.currentTerm,
-				CandidateID:  rf.me,
-				LastLogIndex: rf.getLastLogIndex(),
-				LastLogTerm:  rf.log[rf.getLastLogIndex()].Term,
-			}
-			reply := RequestVoteReply{}
-			DPrintf("Peer[%d]: requestVote sent. %+v", rf.me, args)
-			if ok := rf.sendRequestVote(target, &args, &reply); ok {
-				receiver <- reply
-				// non-blocking return since receivers is buffered channel
-				return
-			}
-		}
-	}
-}
+// func (rf *Raft) leaderInitialization() {
+// 	rf.role = leader
+// 	for peer := 0; peer < len(rf.peers); peer += 1 {
+// 		if peer == rf.me {
+// 			continue
+// 		}
+// 		args := AppendEntriesArgs{
+// 			Term:     rf.currentTerm,
+// 			LeaderID: rf.me,
+// 		}
+// 		rf.sendAppendEntries(rf.me, &args)
+// 	}
+// }
 
 // the service or tester wants to create a Raft server. the ports
 // of all the Raft servers (including this one) are in peers[]. this
@@ -278,21 +290,16 @@ func (rf *Raft) requestVoteWorker(target int, done chan struct{}, receiver chan 
 func Make(peers []*labrpc.ClientEnd, me int,
 	persister *Persister, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{
-		peers:                    peers,
-		persister:                persister,
-		me:                       me,
-		role:                     follower,
-		leaderID:                 -1,
-		currentTerm:              0,
-		votedFor:                 -1,
-		log:                      make([]LogEntry, 1),
-		commitIndex:              0,
-		lastApplied:              0,
-		lastHeartBeatTime:        time.Now(),
-		requestVoteReplyReceiver: make(chan RequestVoteReply, len(peers)),
-		requestVoteDone:          make(chan struct{}),
-		approveCount:             0,
-		rejectCount:              0,
+		peers:       peers,
+		persister:   persister,
+		me:          me,
+		role:        follower,
+		leaderID:    -1,
+		currentTerm: 0,
+		votedFor:    -1,
+		log:         make([]LogEntry, 1),
+		commitIndex: 0,
+		lastApplied: 0,
 	}
 	rf.log[0].Command = nil
 	rf.log[0].Term = 0

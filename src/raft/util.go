@@ -8,7 +8,7 @@ import (
 )
 
 // Debugging
-const Debug = true
+const Debug = false
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
@@ -18,17 +18,26 @@ func DPrintf(format string, a ...interface{}) (n int, err error) {
 }
 
 // Get the last index of self's log, to be modified to adapt to snapshot
+// TODO: if add lock around res it cannot proceed
 func (rf *Raft) getLastLogIndex() int {
-	return len(rf.log) - 1
+	res := len(rf.log) - 1
+	return res
+}
+
+// Get the last term of self's log, to be modified to adapt to snapshot
+// TODO: if add lock around res it cannot proceed
+func (rf *Raft) getLastLogTerm() int {
+	res := rf.log[rf.getLastLogIndex()].Term
+	return res
 }
 
 // return currentTerm and whether this server
 // believes it is the leader.
 func (rf *Raft) GetState() (int, bool) {
-
+	rf.mu.Lock()
 	var term int = rf.currentTerm
-	var isleader bool = (rf.leaderID == rf.me)
-	// Your code here (2A).
+	var isleader bool = (rf.role == leader)
+	rf.mu.Unlock()
 	return term, isleader
 }
 
@@ -59,9 +68,15 @@ func (rf *Raft) GetState() (int, bool) {
 // capitalized all field names in structs passed over RPC, and
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
-func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
-	ok := rf.peers[server].Call("Raft.RequestVote", args, reply)
-	return ok
+func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel chan<- RequestVoteReply) {
+	var reply RequestVoteReply
+	DPrintf("Peer[%d]: sendRequestVote to Peer[%d]. req = %+v", rf.me, server, *args)
+	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
+	if !ok {
+		return
+	}
+	replyChannel <- reply
+	return
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
@@ -72,7 +87,9 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 func (rf *Raft) resetElectionTimeout() {
 	// reset electionTimeOutDuration to a random value between 150 - 300 milliseconds
 	rf.electionTimeoutDuration = time.Duration(rand.Intn(maxElectionTimeout-minElectionTimeout+1)+minElectionTimeout) * time.Millisecond
+	rf.electionTimeoutTicker = time.NewTicker((rf.electionTimeoutDuration))
 }
+
 func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)
 	return z == 1
