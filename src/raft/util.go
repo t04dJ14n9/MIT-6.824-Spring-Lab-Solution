@@ -8,10 +8,11 @@ import (
 )
 
 // Debugging
-const Debug = false
+const Debug = true
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
+		log.SetFlags(log.Ltime | log.Lmicroseconds)
 		log.Printf(format, a...)
 	}
 	return
@@ -70,7 +71,9 @@ func (rf *Raft) GetState() (int, bool) {
 // the struct itself.
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel chan<- RequestVoteReply) {
 	var reply RequestVoteReply
+	rf.mu.Lock()
 	DPrintf("Peer[%d]: sendRequestVote to Peer[%d]. req = %+v", rf.me, server, *args)
+	rf.mu.Unlock()
 	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
 	if !ok {
 		return
@@ -80,14 +83,15 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel 
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
+	DPrintf("Peer[%d] -> Peer[%d]: AppendEntry args %+v", rf.me, server, args)
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
 	return ok
 }
 
 func (rf *Raft) resetElectionTimeout() {
-	// reset electionTimeOutDuration to a random value between 150 - 300 milliseconds
-	rf.electionTimeoutDuration = time.Duration(rand.Intn(maxElectionTimeout-minElectionTimeout+1)+minElectionTimeout) * time.Millisecond
-	rf.electionTimeoutTicker = time.NewTicker((rf.electionTimeoutDuration))
+	// reset electionTimeOutDuration to a random value between 300 - 450 milliseconds
+	rf.electionTimeoutDuration = time.Duration(rand.Intn(300)+150) * time.Millisecond
+	rf.electionTimeoutTicker = time.NewTimer((rf.electionTimeoutDuration))
 }
 
 func (rf *Raft) killed() bool {
