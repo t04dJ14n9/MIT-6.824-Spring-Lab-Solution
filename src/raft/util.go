@@ -8,7 +8,7 @@ import (
 )
 
 // Debugging
-const Debug = true
+const Debug = false
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
@@ -71,12 +71,10 @@ func (rf *Raft) GetState() (int, bool) {
 // the struct itself.
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel chan<- RequestVoteReply) {
 	var reply RequestVoteReply
-	rf.mu.Lock()
 	DPrintf("Peer[%d]: sendRequestVote to Peer[%d]. req = %+v", rf.me, server, *args)
-	rf.mu.Unlock()
 	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
 	if !ok {
-		return
+		replyChannel <- RequestVoteReply{Term: 0, VoteGranted: false}
 	}
 	replyChannel <- reply
 	return
@@ -88,10 +86,9 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	return ok
 }
 
-func (rf *Raft) resetElectionTimeout() {
-	// reset electionTimeOutDuration to a random value between 300 - 450 milliseconds
+// resetElectionTimeoutDuration resets electionTimeoutDuration to a random value between 300 - 450 milliseconds
+func (rf *Raft) resetElectionTimeoutDuration() {
 	rf.electionTimeoutDuration = time.Duration(rand.Intn(300)+150) * time.Millisecond
-	rf.electionTimeoutTicker = time.NewTimer((rf.electionTimeoutDuration))
 }
 
 func (rf *Raft) killed() bool {

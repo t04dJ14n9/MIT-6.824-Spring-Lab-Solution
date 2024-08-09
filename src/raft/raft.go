@@ -49,11 +49,13 @@ type Raft struct {
 	lastApplied int // index of the highest log entry applied to state machine
 
 	// used in election process
-	electionTimeoutDuration time.Duration // random election timeout: 150ms - 300ms
-	electionTimeoutTicker   *time.Timer
+	electionTimeoutDuration time.Duration // random election timeout: 300 - 450ms
+	electionTimeoutBaseline time.Time
 
-	// used in leader sending appendEntries
-	appendEntryTicker *time.Ticker
+	// time interval for leader to send appendEntry
+	appendEntryDuration time.Duration
+	// last time sending appendEntry for leader
+	appendEntryBaseline time.Time
 }
 
 // save Raft's persistent state to stable storage,
@@ -115,7 +117,6 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	defer rf.mu.Unlock()
 	DPrintf("Peer[%d]: RequestVote received: %+v", rf.me, *args)
 	if args.Term < rf.currentTerm {
-		rf.votedFor = -1
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
 		DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
@@ -157,7 +158,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		DPrintf("Peer[%d] turns to follower", rf.me)
 	}
 	if rf.role == follower {
-		rf.resetElectionTimeout()
+		rf.electionTimeoutBaseline = time.Now()
 	}
 	rf.role = follower
 	reply.Term = rf.currentTerm
@@ -204,25 +205,89 @@ func (rf *Raft) Kill() {
 }
 
 func (rf *Raft) appendEntryRoutine() {
-	for {
-		<-rf.appendEntryTicker.C
+	for !rf.killed() {
 		rf.mu.Lock()
-		if rf.killed() || rf.role != leader {
+		if rf.role == leader && time.Since(rf.appendEntryBaseline) > rf.appendEntryDuration {
+			rf.appendEntryBaseline = time.Now()
+			arg := AppendEntriesArgs{
+				Term:         rf.currentTerm,
+				LeaderID:     rf.me,
+				PrevLogIndex: rf.getLastLogIndex(),
+			}
 			rf.mu.Unlock()
-			continue
-		}
-		arg := AppendEntriesArgs{
-			Term:         rf.currentTerm,
-			LeaderID:     rf.me,
-			PrevLogIndex: rf.getLastLogIndex(),
+			for peer := 0; peer < len(rf.peers); peer++ {
+				if peer == rf.me {
+					continue
+				}
+				var reply AppendEntriesReply
+				go rf.sendAppendEntries(peer, &arg, &reply)
+			}
+			goto SLEEP
 		}
 		rf.mu.Unlock()
-		for peer := 0; peer < len(rf.peers); peer++ {
-			if peer == rf.me {
-				continue
-			}
-			var reply AppendEntriesReply
-			go rf.sendAppendEntries(peer, &arg, &reply)
+	SLEEP:
+		time.Sleep(AppendEntryCheckInterval)
+	}
+}
+
+func (rf *Raft) doElection() {
+	DPrintf("Peer[%d] election timeout", rf.me)
+	rf.currentTerm += 1
+	rf.role = candidate
+	rf.electionTimeoutBaseline = time.Now()
+	rf.resetElectionTimeoutDuration()
+	rf.votedFor = rf.me
+	// number of peers that approve the vote in current round of election
+	approveCount := 1
+
+	args := RequestVoteArgs{
+		Term:         rf.currentTerm,
+		CandidateID:  rf.me,
+		LastLogIndex: rf.getLastLogIndex(),
+		LastLogTerm:  rf.getLastLogTerm(),
+	}
+	rf.mu.Unlock()
+
+	// send requestVote to all peers
+	replyChannel := make(chan RequestVoteReply, len(rf.peers))
+	for peer := 0; peer < len(rf.peers); peer++ {
+		if peer == rf.me {
+			continue
+		}
+		go rf.sendRequestVote(peer, &args, replyChannel)
+	}
+
+	for {
+		reply := <-replyChannel
+		rf.mu.Lock()
+		DPrintf("Peer[%d]: received reply %+v", rf.me, reply)
+		// if while waiting for the reply, an appendEntry RPC with equal or higher term is received,
+		// turn to follower and reset election timeout
+		if rf.role == follower {
+			DPrintf("Peer[%d]: already turned to follower while receiving reply", rf.me)
+			rf.mu.Unlock()
+			return
+		}
+		if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
+			DPrintf("Peer[%d]: wait for reply timeout", rf.me)
+			rf.mu.Unlock()
+			return
+		}
+		if reply.Term > rf.currentTerm { // if a reply with higher term is received, turn to follower
+			rf.currentTerm = reply.Term
+			rf.role = follower
+			DPrintf("Peer[%d]: reply with higher term received, turning to follower", rf.me)
+			rf.mu.Unlock()
+			return
+		}
+		if reply.VoteGranted {
+			approveCount += 1
+		}
+		DPrintf("Peer[%d]: approveCount = %d", rf.me, approveCount)
+		if approveCount > len(rf.peers)/2 {
+			DPrintf("Peer[%d] turns to leader", rf.me)
+			rf.leaderInitialization()
+			return
 		}
 	}
 }
@@ -233,87 +298,19 @@ func (rf *Raft) electionRoutine() {
 	// Your code here to check if a leader election should
 	// be started and to randomize sleeping time using
 	// time.Sleep().
-	for {
-		// I should not held the lock before the ticker ticks since other goroutine need to proceed
-		<-rf.electionTimeoutTicker.C
-	startElection:
+	for !rf.killed() {
 		rf.mu.Lock()
-		// leader does not start an election
-		if rf.killed() || rf.role == leader {
-			continue
-		}
-		DPrintf("Peer[%d] election timeout", rf.me)
-		rf.currentTerm += 1
-		rf.role = candidate
-		rf.resetElectionTimeout()
-		rf.votedFor = rf.me
-		// number of peers that approve the vote in current round of election
-		approveCount := 1
-		// number of peers that reject the vode in current round of election
-		rejectCount := 0
-		args := RequestVoteArgs{
-			Term:         rf.currentTerm,
-			CandidateID:  rf.me,
-			LastLogIndex: rf.getLastLogIndex(),
-			LastLogTerm:  rf.getLastLogTerm(),
+		if rf.role != leader && time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration { // election starts
+			rf.doElection()
+			goto SLEEP
 		}
 		rf.mu.Unlock()
-		replyChannel := make(chan RequestVoteReply, len(rf.peers))
-		for peer := 0; peer < len(rf.peers); peer++ {
-			if peer == rf.me {
-				continue
-			}
-			go rf.sendRequestVote(peer, &args, replyChannel)
-		}
-		for {
-			select {
-			// if electionTimeout happens again while waiting for replies, start election again
-			case <-rf.electionTimeoutTicker.C:
-				goto startElection
-			case reply := <-replyChannel:
-				// if received a reply with higher term, change to follower and reset election timeout
-				rf.mu.Lock()
-				if rf.role == follower { // received AppendEntry from leader
-					rf.resetElectionTimeout()
-					rf.mu.Unlock()
-					rf.electionRoutine()
-				}
-				if reply.Term > rf.currentTerm {
-					rf.currentTerm = reply.Term
-					rf.role = follower
-					rf.resetElectionTimeout()
-					rf.mu.Unlock()
-					rf.electionRoutine()
-				}
-				rf.mu.Unlock()
-				if reply.VoteGranted {
-					approveCount += 1
-				} else {
-					rejectCount += 1
-				}
-				if approveCount > len(rf.peers)/2 {
-					DPrintf("Peer[%d] turns to leader", rf.me)
-					rf.leaderInitialization()
-					rf.mu.Lock()
-					rf.resetElectionTimeout()
-					rf.mu.Unlock()
-					rf.electionRoutine()
-				}
-				if rejectCount > len(rf.peers)/2 {
-					rf.mu.Lock()
-					DPrintf("Peer[%d] turns to follower", rf.me)
-					rf.role = follower
-					rf.resetElectionTimeout()
-					rf.mu.Unlock()
-					rf.electionRoutine()
-				}
-			}
-		}
+	SLEEP:
+		time.Sleep(ElectionCheckInterval)
 	}
 }
 
 func (rf *Raft) leaderInitialization() {
-	rf.mu.Lock()
 	rf.role = leader
 	args := AppendEntriesArgs{
 		Term:     rf.currentTerm,
@@ -358,10 +355,11 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	// initialize from state persisted before a crash
 	rf.readPersist(persister.ReadRaftState())
 
-	rf.resetElectionTimeout()
-
-	rf.appendEntryTicker = time.NewTicker(120 * time.Millisecond)
-
+	// initailize the timeout stats
+	rf.resetElectionTimeoutDuration()
+	rf.electionTimeoutBaseline = time.Now()
+	rf.appendEntryBaseline = time.Now()
+	rf.appendEntryDuration = 120 * time.Millisecond
 	// start ticker goroutine to start elections
 	go rf.electionRoutine()
 	go rf.appendEntryRoutine()
