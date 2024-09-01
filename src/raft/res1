@@ -1,0 +1,1146 @@
+Test (2A): initial election ...
+23:51:57.239492 Peer[2] election timeout
+23:51:57.239982 Peer[2]: sendRequestVote to Peer[1]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:51:57.240016 Peer[2]: sendRequestVote to Peer[0]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:51:57.240897 Peer[1]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:51:57.240931 Peer[1]: RequestVote response: {Term:1 VoteGranted:true}
+23:51:57.241143 Peer[0]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:51:57.241184 Peer[0]: RequestVote response: {Term:1 VoteGranted:true}
+23:51:57.241304 Peer[2]: received reply {Term:1 VoteGranted:true}
+23:51:57.241333 Peer[2]: approveCount = 2
+23:51:57.241346 Peer[2] turns to leader
+23:51:57.241366 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.241438 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.242047 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.242062 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.250089 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.250161 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.250589 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.250688 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.377004 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.377032 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.377606 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.377733 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.505370 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.505439 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.505923 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.506061 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.632831 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.632890 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.633319 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.633340 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.761895 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.761920 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.762338 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.762389 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.889734 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.889820 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:57.890234 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:57.890382 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.017886 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.017970 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.018477 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.018481 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.147167 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.147200 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.147619 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.147787 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.276112 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.276187 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.276598 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.276827 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.401699 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.401773 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.402211 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.402408 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.524796 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.524853 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.525323 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.525539 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.648359 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.648301 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.648975 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.649015 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.773338 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.773376 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.773830 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.774038 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.897657 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.897711 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:58.898214 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:58.898241 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.021246 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.021221 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.021938 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.021938 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.145275 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.145333 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.145814 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.145886 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.270120 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.270194 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.270594 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.270651 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.395208 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.395262 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.395745 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.395769 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.519498 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.519564 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.520063 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.520091 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.643176 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.643228 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.643651 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.643715 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.766574 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.766623 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.767080 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.767158 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.891030 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.891057 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:51:59.891511 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:51:59.891809 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+  ... Passed --   3.0  3   48   12370    0
+Test (2A): election after network failure ...
+23:52:00.283653 Peer[2] election timeout
+23:52:00.283809 Peer[2]: sendRequestVote to Peer[1]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:00.283825 Peer[2]: sendRequestVote to Peer[0]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:00.284290 Peer[0]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:00.284331 Peer[0]: RequestVote response: {Term:1 VoteGranted:true}
+23:52:00.284398 Peer[1]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:00.284440 Peer[1]: RequestVote response: {Term:1 VoteGranted:true}
+23:52:00.284688 Peer[2]: received reply {Term:1 VoteGranted:true}
+23:52:00.284714 Peer[2]: approveCount = 2
+23:52:00.284722 Peer[2] turns to leader
+23:52:00.284736 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.284758 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.285119 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.285220 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.294261 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.294315 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.294806 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.294862 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.418794 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.418810 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.419388 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.419427 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.542919 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.543013 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.543415 Peer[1] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.543485 Peer[0] -> Peer[2]: AppendEntry reply = &{Term:1 Success:true}
+23:52:00.669128 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.669193 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.793480 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.793532 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.855054 Peer[1] election timeout
+23:52:00.855155 Peer[1]: sendRequestVote to Peer[2]. req = {Term:2 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
+23:52:00.855155 Peer[1]: sendRequestVote to Peer[0]. req = {Term:2 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
+23:52:00.855628 Peer[0]: RequestVote received: {Term:2 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
+23:52:00.855661 Peer[0]: RequestVote response: {Term:2 VoteGranted:true}
+23:52:00.855937 Peer[1]: received reply {Term:2 VoteGranted:true}
+23:52:00.855998 Peer[1]: approveCount = 2
+23:52:00.856012 Peer[1] turns to leader
+23:52:00.856038 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.856048 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.856476 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:00.865232 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.865281 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.865768 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:00.918560 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.918623 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.993393 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.993450 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:00.993924 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.045903 Peer[2] -> Peer[1]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.045995 Peer[2] -> Peer[0]: AppendEntry args &{Term:1 LeaderID:2 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.046387 Peer[1]: AppendEntry reply = &{Term:2 Success:false}
+23:52:01.046489 Peer[0]: AppendEntry reply = &{Term:2 Success:false}
+23:52:01.118304 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.118345 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.118795 Peer[2] turns to follower
+23:52:01.118817 Peer[2] -> Peer[1]: AppendEntry reply = &{Term:1 Success:true}
+23:52:01.118903 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.128397 Peer[2] election timeout
+23:52:01.128480 Peer[2]: sendRequestVote to Peer[1]. req = {Term:2 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:01.128496 Peer[2]: sendRequestVote to Peer[0]. req = {Term:2 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:01.128842 Peer[1]: RequestVote received: {Term:2 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:01.128888 Peer[1]: RequestVote response: {Term:2 VoteGranted:false}
+23:52:01.129074 Peer[0]: RequestVote received: {Term:2 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
+23:52:01.129125 Peer[2]: received reply {Term:2 VoteGranted:false}
+23:52:01.129154 Peer[2]: approveCount = 1
+23:52:01.129136 Peer[0]: RequestVote response: {Term:2 VoteGranted:false}
+23:52:01.242219 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.242280 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.242797 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.368008 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.367991 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.368631 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.493117 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.493201 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.493631 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.617180 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.617234 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.617672 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.741025 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.741081 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.741614 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.865085 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.865150 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.865639 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:01.991842 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.991829 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:01.992527 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.117519 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.117587 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.118108 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.244589 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.244634 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.245125 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.370210 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.370267 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.370729 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.495034 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.495055 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.495154 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.619997 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.620131 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.620589 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.745536 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.745603 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.745678 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.871231 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.871259 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.871811 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:02.997182 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.997250 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:02.997643 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.124811 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.124869 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.125451 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.248656 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.248728 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.249329 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.375991 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.376052 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.376575 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.502093 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.502070 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.502705 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.629640 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.629657 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.630306 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.754358 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.754418 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.754855 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:03.879295 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.879350 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:03.879876 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.005566 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.005560 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.006235 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.130434 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.130483 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.131062 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.256595 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.256657 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.257134 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.383399 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.383469 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.384001 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.509554 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.509595 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.510304 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.635771 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.635824 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.636292 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.761440 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.761450 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.762031 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:04.887433 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.887487 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:04.888051 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.013031 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.013063 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.013582 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.140022 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.140056 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.140640 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.266699 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.266736 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.267336 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.392110 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.392163 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.393273 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.518254 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.518303 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.518937 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.644294 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.644353 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.644853 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.770076 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.770141 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.770676 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:05.895685 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.895749 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:05.896170 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.022609 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.022679 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.023108 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.150400 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.150828 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.150985 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.276463 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.276520 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.276970 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.404907 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.404989 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.405494 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.531207 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.531265 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.531778 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.655870 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.655900 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.656117 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.781224 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.781283 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.781697 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:06.909075 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.909126 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:06.909561 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.035652 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.035706 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.036248 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.162235 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.162331 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.162796 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.291190 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.291202 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.291787 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.416872 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.416963 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.417413 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.545346 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.545436 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.546000 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.670538 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.670600 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.671062 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.797380 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.797413 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.797638 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:07.924389 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.924470 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:07.924924 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.053239 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.053301 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.053767 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.180100 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.180156 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.180702 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.305913 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.305930 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.306494 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.431580 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.431641 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.432103 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.558679 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.558760 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.559191 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.683989 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.684052 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.684593 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.809037 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.809089 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.809554 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:08.939347 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.939402 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:08.939797 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.065908 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.066002 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.066492 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.191616 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.191681 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.192128 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.318042 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.318138 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.318612 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.443372 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.443442 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.443983 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.568565 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.568620 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.569126 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.693397 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.693452 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.693899 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.818468 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.818526 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.819029 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:09.946027 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.946066 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:09.946538 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.073377 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.073409 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.073854 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.199442 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.199480 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.200121 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.323737 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.323775 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.323928 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.449228 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.449271 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.449780 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.573850 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.573906 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.574491 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.699192 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.699213 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.699629 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.825578 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.825648 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.825865 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:10.954813 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.954867 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:10.955358 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.081835 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.081935 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.082405 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.209235 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.209304 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.209787 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.335548 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.335608 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.336115 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.462646 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.462687 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.462764 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.588013 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.588069 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.588628 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.714251 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.714311 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.715034 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.840438 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.840469 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.840575 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:11.966216 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.966190 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:11.966695 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.093327 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.093387 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.093876 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.220031 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.220084 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.220621 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.347246 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.347256 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.347749 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.475012 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.475025 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.475568 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.601783 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.601814 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.601918 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.729436 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.729482 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.729898 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.854118 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.854184 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.854685 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:12.980264 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.980321 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:12.980994 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.104308 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.104365 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.104826 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.229743 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.229807 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.230326 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.356202 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.356288 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.356874 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.481488 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.481532 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.482099 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.608010 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.608146 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.608522 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.734268 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.734324 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.734810 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.860885 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.861021 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.861414 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:13.986180 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.986251 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:13.986722 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.112884 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.112934 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.113467 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.240463 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.240485 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.241022 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.367454 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.367474 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.368387 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.495373 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.495417 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.496071 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.622199 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.622260 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.622704 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.747487 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.747537 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.747916 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:14.874394 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.874399 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:14.874642 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.003414 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.003435 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.004157 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.129107 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.129214 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.129723 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.253547 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.253626 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.254246 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.379534 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.379573 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.380153 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.506027 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.506046 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.506634 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.631311 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.631372 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.631761 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.756644 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.756705 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.757193 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:15.881121 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.881174 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:15.881677 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.005158 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.005200 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.005695 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.133359 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.133391 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.133540 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.259165 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.259287 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.259655 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.385307 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.385389 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.385892 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.510778 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.510841 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.511239 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.635444 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.635488 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.635791 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.761646 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.761692 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.762196 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:16.889399 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.889503 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:16.889867 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.013589 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.013628 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.014148 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.140489 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.140566 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.141095 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.267104 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.267181 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.267649 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.393348 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.393413 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.393943 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.522480 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.522483 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.523036 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.648451 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.648520 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.649080 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.775808 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.775831 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.775939 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:17.901078 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.901088 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:17.901652 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.027243 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.027308 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.027777 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.152420 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.152478 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.153000 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.278224 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.278244 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.278638 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.405409 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.405491 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.406037 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.532378 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.532383 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.532608 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.658128 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.658188 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.658669 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.785869 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.785923 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.786353 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:18.913369 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.913426 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:18.913942 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.039244 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.039237 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.039836 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.166189 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.166230 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.166658 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.290977 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.291020 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.291504 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.417198 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.417258 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.418482 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.544137 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.544204 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.544667 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.670679 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.670774 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.671179 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.794878 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.794939 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.795562 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:19.921537 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.921628 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:19.922161 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.049099 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.049189 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.049691 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.175173 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.175238 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.175704 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.300537 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.300635 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.300785 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.425142 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.425237 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.425744 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.551197 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.551243 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.551755 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.676306 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.676348 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.676742 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.799978 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.799985 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.800541 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:20.927436 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.927501 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:20.927915 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.052720 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.052799 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.053233 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.179235 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.179311 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.179855 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.303625 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.303662 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.304230 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.428270 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.428329 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.428824 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.553797 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.553865 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.554345 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.678713 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.678775 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.679245 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.805624 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.805677 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.806184 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:21.930854 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.930919 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:21.931435 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.057508 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.057482 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.058024 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.184397 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.184394 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.184547 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.310389 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.310489 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.310940 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.438854 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.438910 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.439488 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.565317 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.565373 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.565796 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.692687 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.692731 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.692853 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.818564 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.818631 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.819209 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:22.947022 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.947066 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:22.947606 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.073156 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.073206 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.073744 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.198121 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.198188 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.198625 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.323129 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.323198 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.323624 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.450389 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.450424 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.450847 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.575093 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.575136 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.575390 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.700567 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.700709 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.701113 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.827615 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.827626 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.828060 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:23.955721 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.955789 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:23.956345 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.083224 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.083252 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.083761 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.209823 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.209811 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.210386 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.336611 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.336664 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.337317 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.465446 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.465509 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.465991 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.591851 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.591937 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.592529 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.717241 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.717322 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.717771 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.845338 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.845363 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.845997 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:24.971173 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.971214 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:24.971324 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.096754 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.096772 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.097328 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.222896 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.222982 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.223418 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.348459 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.348538 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.349007 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.475178 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.475235 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.475663 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.601165 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.601207 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.601833 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.729183 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.729256 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.729629 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.855983 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.856034 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.856641 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:25.983011 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.982978 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:25.983479 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.109469 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.109539 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.110056 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.236122 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.236152 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.236757 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.363987 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.363941 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.364413 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.491042 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.491081 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.491627 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.619651 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.619733 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.620136 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.746767 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.746830 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.747347 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:26.873497 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.873550 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:26.874028 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.001515 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.001537 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.002078 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.128399 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.128419 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.129044 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.254389 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.254475 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.254840 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.381160 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.381237 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.381761 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.509909 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.509972 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.510445 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.636014 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.636085 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.636594 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.762564 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.762632 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.763148 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:27.889460 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.889516 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:27.890016 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.015919 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.016001 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.016493 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.142390 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.142462 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.142914 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.268226 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.268281 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.268689 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.393612 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.393650 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.394041 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.521000 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.521054 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.521441 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.647857 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.647908 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.648829 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.775754 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.775807 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.776302 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:28.902122 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.902210 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:28.902697 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.028769 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.028811 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.029273 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.155504 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.155611 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.156086 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.280857 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.280914 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.281358 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.407381 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.407458 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.407839 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.534643 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.534690 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.535254 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.661654 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.661702 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.662130 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.789055 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.789111 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.789490 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:29.916413 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.916430 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:29.916961 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.043494 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.043549 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.043733 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.169216 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.169300 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.169731 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.294376 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.294436 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.294900 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.419813 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.419870 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.420353 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.547039 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.547111 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.547603 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.674674 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.674727 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.675221 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.800494 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.800480 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.800924 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:30.927193 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.927249 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:30.927666 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.052380 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.052428 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.052701 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.179249 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.179329 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.179733 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.306033 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.306067 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.306456 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.431131 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.431181 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.431664 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.555562 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.555596 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.555696 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.683411 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.683456 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.683865 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.810175 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.810296 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.810785 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:31.935273 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.935330 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:31.935724 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.061526 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.061580 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.062114 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.189154 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.189207 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.189650 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.316039 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.316056 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.316658 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.441102 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.441175 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.441730 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.567067 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.567134 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.567604 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.692723 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.692782 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.693418 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.821395 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.821449 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.821517 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:32.947435 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.947433 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:32.947883 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.073083 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.073090 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.073764 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.199067 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.199111 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.199249 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.326734 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.326792 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.327199 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.453248 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.453295 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.453384 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.579160 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.579306 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.579716 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.706571 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.706609 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.707095 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.831236 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.831281 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.831737 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:33.959448 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.959461 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:33.960135 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.086163 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.086214 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.086696 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.213158 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.213209 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.213677 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.339716 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.339777 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.340228 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.464265 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.464271 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.464799 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.590465 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.590463 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.590628 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.718020 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.718064 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.718713 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.843938 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.844021 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.844579 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:34.969087 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.969172 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:34.969703 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.095525 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.095596 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.096225 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.222073 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.222127 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.222590 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.348458 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.348503 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.349060 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.474484 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.474597 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.475199 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.600393 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.600453 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.600942 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.724898 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.724984 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.725460 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.850680 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.850738 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.851172 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:35.976025 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.976073 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:35.976154 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.100514 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.100561 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.101215 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.227383 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.227439 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.227936 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.355083 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.355083 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.355654 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.483315 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.483375 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.483820 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.610190 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.610249 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.610761 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.736755 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.736778 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.737301 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.863511 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.863568 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.864065 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:36.989593 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.989666 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:36.990083 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.114746 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.114830 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.115244 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.242640 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.242687 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.243113 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.371176 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.371236 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.371596 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.499486 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.499548 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.500025 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.626684 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.626726 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.627137 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.751893 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.751979 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.752374 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:37.877259 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.877318 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:37.877789 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.004183 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.004201 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.004762 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.132157 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.132249 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.132671 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.258319 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.258385 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.258776 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.386143 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.386189 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.386592 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.513113 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.513121 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.513725 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.641313 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.641379 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.641813 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.766473 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.766524 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.766974 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:38.894021 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.894073 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:38.895095 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.020119 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.020148 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.020280 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.145060 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.145109 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.145191 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.273538 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.273595 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.274050 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.401169 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.401151 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.401596 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.526606 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.526662 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.527091 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.652944 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.653034 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.653497 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.779352 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.779430 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.779811 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:39.906350 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.906395 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:39.906593 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.032138 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.032179 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.032274 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.158345 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.158377 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.158505 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.285214 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.285254 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.285421 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.409505 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.409556 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.410098 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.535588 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.535647 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.536119 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.661668 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.661721 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.662287 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.788122 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.788135 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.788769 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:40.913151 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.913204 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:40.913588 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.041353 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.041420 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.041852 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.165515 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.165566 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.166014 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.292215 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.292314 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.292839 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.417486 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.417537 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.417914 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.544120 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.544171 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.544584 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.670081 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.670175 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.670651 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.796268 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.796309 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.796416 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:41.921749 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.921816 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:41.922255 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+23:52:42.049153 Peer[1] -> Peer[2]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:42.049270 Peer[1] -> Peer[0]: AppendEntry args &{Term:2 LeaderID:1 PrevLogIndex:0 PrevLogTerm:0 Entries:[] LeaderCommit:0}
+23:52:42.049647 Peer[0] -> Peer[1]: AppendEntry reply = &{Term:2 Success:true}
+signal: interrupt
+FAIL	6.824/raft	45.116s

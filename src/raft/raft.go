@@ -116,6 +116,14 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 	DPrintf("Peer[%d]: RequestVote received: %+v", rf.me, *args)
+	if args.Term > rf.currentTerm { // if RPC request with higher term received, convert to follower
+		DPrintf("Peer[%d]: RequestVote with a higher term received", rf.me)
+		rf.role = follower
+		rf.currentTerm = args.Term
+		rf.votedFor = args.CandidateID
+		reply.Term = args.Term
+		reply.VoteGranted = true
+	}
 	if args.Term < rf.currentTerm {
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
@@ -140,6 +148,13 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
+	if args.Term > rf.currentTerm {
+		DPrintf("Peer[%d]: AppendEntry with higher term received, convert to follower", rf.me)
+		rf.role = follower
+		rf.currentTerm = args.Term
+		reply.Success = true
+		reply.Term = args.Term
+	}
 	if args.Term < rf.currentTerm {
 		reply.Term = rf.currentTerm
 		reply.Success = false

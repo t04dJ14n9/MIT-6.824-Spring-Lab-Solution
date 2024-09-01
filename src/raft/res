@@ -1,24 +1,7 @@
-00:36:45.967981 Peer[0] election timeout
-00:36:45.968154 Peer[0]: sendRequestVote to Peer[2]. req = {Term:1 CandidateID:0 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968184 Peer[0]: sendRequestVote to Peer[1]. req = {Term:1 CandidateID:0 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968339 Peer[1] election timeout
-00:36:45.968389 Peer[1]: sendRequestVote to Peer[0]. req = {Term:1 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968463 Peer[2] election timeout
-00:36:45.968430 Peer[1]: sendRequestVote to Peer[2]. req = {Term:1 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968520 Peer[2]: sendRequestVote to Peer[0]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
 Test (2A): initial election ...
-00:36:45.968608 Peer[2]: sendRequestVote to Peer[1]. req = {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968826 Peer[1]: RequestVote received: {Term:1 CandidateID:0 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968851 Peer[1]: RequestVote response: {Term:1 VoteGranted:false}
-00:36:45.968866 Peer[0]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968889 Peer[0]: RequestVote response: {Term:1 VoteGranted:false}
-00:36:45.968828 Peer[2]: RequestVote received: {Term:1 CandidateID:0 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968943 Peer[0]: RequestVote received: {Term:1 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
-00:36:45.968966 Peer[0]: RequestVote response: {Term:1 VoteGranted:false}
-00:36:45.968950 Peer[2]: RequestVote response: {Term:1 VoteGranted:false}
-00:36:45.969081 Peer[2]: RequestVote received: {Term:1 CandidateID:1 LastLogIndex:0 LastLogTerm:0}
-00:36:45.969104 Peer[2]: RequestVote response: {Term:1 VoteGranted:false}
-00:36:45.969095 Peer[1]: RequestVote received: {Term:1 CandidateID:2 LastLogIndex:0 LastLogTerm:0}
-00:36:45.969131 Peer[1]: RequestVote response: {Term:1 VoteGranted:false}
+  ... Passed --   3.0  3   50   12894    0
+Test (2A): election after network failure ...
+  ... Passed --   4.5  3   96   20266    0
+Test (2A): multiple elections ...
 signal: interrupt
-FAIL	6.824/raft	2.322s
+FAIL	6.824/raft	19.020s
