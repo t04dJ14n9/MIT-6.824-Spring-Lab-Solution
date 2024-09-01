@@ -10,5 +10,4 @@ const (
 	leader
 )
 
-var ElectionCheckInterval time.Duration = time.Millisecond * 10
-var AppendEntryCheckInterval time.Duration = time.Millisecond * 10
+var CheckInterval time.Duration = time.Millisecond * 10
