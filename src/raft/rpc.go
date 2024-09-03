@@ -28,12 +28,15 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		reply.VoteGranted = false
 		return
 	}
+
 	if rf.votedFor == -1 || rf.votedFor == args.CandidateID { //&& // didn't vote for anyone else and \n
 		// args.Term > rf.currentTerm || (args.Term == rf.currentTerm && args.LastLogIndex >= rf.getLastLogIndex()) { // candidate's log is more up-to-date
 		rf.currentTerm = args.Term
+		rf.votedFor = args.CandidateID
+		rf.resetElectionTimeoutDuration()
+		rf.electionTimeoutBaseline = time.Now()
 		reply.Term = args.Term
 		reply.VoteGranted = true
-		rf.votedFor = args.CandidateID
 		return
 	}
 	reply.Term = rf.currentTerm
@@ -59,7 +62,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		reply.Success = false
 		return
 	}
-	// term number is the same as rf.currentTerm
+	// term number is the same as rf.currentTerm, receiving vote from current leader
 
 	// if rf.getLastLogIndex() < args.PrevLogIndex ||
 	// 	(rf.getLastLogIndex() >= args.PrevLogIndex && rf.log[args.PrevLogIndex].Term != args.Term) {
@@ -73,6 +76,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.role = follower
 	}
 	rf.electionTimeoutBaseline = time.Now()
+	rf.resetElectionTimeoutDuration()
 	reply.Term = rf.currentTerm
 	reply.Success = true
 	DPrintf("Peer[%d] -> Peer[%d]: AppendEntry reply = %+v", rf.me, args.LeaderID, reply)
