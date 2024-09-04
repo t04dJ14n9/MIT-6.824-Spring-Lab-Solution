@@ -6,7 +6,6 @@ import "time"
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// Your code here (2A, 2B).
 	rf.mu.Lock()
-	defer DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
 	defer rf.mu.Unlock()
 
 	DPrintf("Peer[%d]: RequestVote received: %+v", rf.me, *args)
@@ -19,6 +18,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		rf.votedFor = args.CandidateID
 		reply.Term = args.Term
 		reply.VoteGranted = true
+		DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
 		return
 	}
 
@@ -26,6 +26,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	if args.Term < rf.currentTerm {
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
+		DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
 		return
 	}
 
@@ -37,17 +38,18 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		rf.electionTimeoutBaseline = time.Now()
 		reply.Term = args.Term
 		reply.VoteGranted = true
+		DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
 		return
 	}
 	reply.Term = rf.currentTerm
 	reply.VoteGranted = false
+	DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
 	return
 }
 
 // AppendEntries RPC handler.
 func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply) {
 	rf.mu.Lock()
-	defer DPrintf("Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
 	defer rf.mu.Unlock()
 	if args.Term > rf.currentTerm {
 		DPrintf("Peer[%d]: AppendEntry with higher term received, convert to follower", rf.me)
@@ -55,11 +57,14 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.currentTerm = args.Term
 		reply.Success = true
 		reply.Term = args.Term
+		DPrintf("Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
 		return
 	}
 	if args.Term < rf.currentTerm {
+		DPrintf("Peer[%d]: Reject AppendEntry RPC with smaller term number", rf.me)
 		reply.Term = rf.currentTerm
 		reply.Success = false
+		DPrintf("Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
 		return
 	}
 	// term number is the same as rf.currentTerm, receiving vote from current leader
@@ -77,9 +82,24 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
+	// save log
+	if rf.getLastLogIndex() != args.PrevLogIndex {
+		DPrintf("Peer[%d]: AppendEntry PrevLogEntry = %d does not match lastLogIndex = %d", rf.me, args.PrevLogIndex, rf.getLastLogIndex())
+		reply.Term = rf.currentTerm
+		reply.Success = false
+		return
+	}
+	if len(args.Entries) != 0 {
+		DPrintf("Peer[%d]: Append Entries to log: %+v", rf.me, args.Entries)
+	}
+	DPrintf("Peer[%d] log %v", rf.me, rf.log)
+	rf.log = append(rf.log, args.Entries...)
+	if args.LeaderCommit > rf.commitIndex {
+		DPrintf("Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
+		rf.commitIndex = args.LeaderCommit
+	}
 	reply.Term = rf.currentTerm
 	reply.Success = true
-	DPrintf("Peer[%d] -> Peer[%d]: AppendEntry reply = %+v", rf.me, args.LeaderID, reply)
+	DPrintf("Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
 	return
-	// TODO: complete implementation
 }

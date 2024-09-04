@@ -5,12 +5,18 @@ import "time"
 func (rf *Raft) applyEntryRoutine() {
 	for !rf.killed() {
 		rf.mu.Lock()
-		defer rf.mu.Unlock()
 
 		if rf.commitIndex > rf.lastApplied {
 			rf.lastApplied++
-			// TODO: apply log entry to local state machine
+			applyMsg := ApplyMsg{
+				CommandValid: true,
+				CommandIndex: rf.lastApplied,
+				Command:      rf.log[rf.lastApplied].Command,
+			}
+			DPrintf("Peer[%d]: applyMsg sent %+v", rf.me, applyMsg)
+			rf.applyChan <- applyMsg
 		}
+		rf.mu.Unlock()
 		time.Sleep(CheckInterval)
 	}
 }

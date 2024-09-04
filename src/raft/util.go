@@ -32,16 +32,6 @@ func (rf *Raft) getLastLogTerm() int {
 	return res
 }
 
-// return currentTerm and whether this server
-// believes it is the leader.
-func (rf *Raft) GetState() (int, bool) {
-	rf.mu.Lock()
-	var term int = rf.currentTerm
-	var isleader bool = (rf.role == leader)
-	rf.mu.Unlock()
-	return term, isleader
-}
-
 // example code to send a RequestVote RPC to a server.
 // server is the index of the target server in rf.peers[].
 // expects RPC arguments in args.

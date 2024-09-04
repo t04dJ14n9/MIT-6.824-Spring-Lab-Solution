@@ -60,6 +60,8 @@ type Raft struct {
 	// volatile states on leader
 	nextIndex  []int // index of next log to send to each peer
 	matchIndex []int // index of highest log entry known to be replicated on server
+
+	applyChan chan ApplyMsg // the apply channel for the application layer
 }
 
 // the service using Raft (e.g. a k/v server) wants to start
@@ -78,16 +80,30 @@ func (rf *Raft) Start(command interface{}) (index int, term int, isLeader bool) 
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 
-	index = rf.getLastLogIndex() + 1
-	term = rf.currentTerm
 	isLeader = (rf.role == leader)
 	if !isLeader {
 		return
 	}
-	DPrintf("Peer[%d]: start consensus with command %v, term %v, index %v", rf.me, command, term, index)
-	// Your code here (2B).
+	le := LogEntry{
+		Command: command,
+		Term:    rf.currentTerm,
+	}
+	rf.log = append(rf.log, le)
+	index = rf.getLastLogIndex()
+	term = rf.currentTerm
+	DPrintf("Peer[%d]: start consensus with command %v, logEntry %v, index %v", rf.me, command, le, index)
 
 	return
+}
+
+// return currentTerm and whether this server
+// believes it is the leader.
+func (rf *Raft) GetState() (int, bool) {
+	rf.mu.Lock()
+	var term int = rf.currentTerm
+	var isleader bool = (rf.role == leader)
+	rf.mu.Unlock()
+	return term, isleader
 }
 
 // the tester doesn't halt goroutines created by Raft after each test,
@@ -125,6 +141,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 		log:         make([]LogEntry, 1),
 		commitIndex: 0,
 		lastApplied: 0,
+		applyChan:   applyCh,
 	}
 	rf.log[0].Command = nil
 	rf.log[0].Term = 0
@@ -140,6 +157,6 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	// start ticker goroutine to start elections
 	go rf.electionRoutine()
 	go rf.appendEntryRoutine()
-	// go rf.applyEntryRoutine()
+	go rf.applyEntryRoutine()
 	return rf
 }
