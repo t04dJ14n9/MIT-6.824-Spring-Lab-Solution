@@ -32,6 +32,10 @@ func (rf *Raft) getLastLogTerm() int {
 	return res
 }
 
+func (rf *Raft) getLogLength() int {
+	return len(rf.log)
+}
+
 // example code to send a RequestVote RPC to a server.
 // server is the index of the target server in rf.peers[].
 // expects RPC arguments in args.
