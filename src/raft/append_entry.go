@@ -44,10 +44,21 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 		rf.mu.Lock()
 		defer rf.mu.Unlock()
 		DPrintf("Peer[%d] => Peer[%d]: AppendEntry response received %+v", rf.me, peer, reply)
+		if reply.Term > rf.currentTerm {
+			DPrintf("Peer[%d] => Peer[%d]: Received AppendEntries reply with higher term %d with currentTerm %d, convert to follower",
+				rf.me, peer, reply.Term, rf.currentTerm)
+			rf.currentTerm = reply.Term
+			rf.role = follower
+			return
+		}
 		if reply.Success {
 			rf.nextIndex[peer] = arg.PrevLogIndex + len(arg.Entries) + 1
 			rf.matchIndex[peer] = arg.PrevLogIndex + len(arg.Entries)
 			rf.updateCommitIndex()
+		} else {
+			if rf.nextIndex[peer] > 1 {
+				rf.nextIndex[peer]--
+			}
 		}
 	}()
 }

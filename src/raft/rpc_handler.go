@@ -12,7 +12,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 
 	// if RPC request with higher term received, convert to follower
 	if args.Term > rf.currentTerm {
-		DPrintf("Peer[%d]: RequestVote with a higher term received", rf.me)
+		DPrintf("Peer[%d]: RequestVote with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
 		rf.currentTerm = args.Term
 		rf.votedFor = args.CandidateID
@@ -24,6 +24,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 
 	// reject requests with smaller term number
 	if args.Term < rf.currentTerm {
+		DPrintf("Peer[%d]: RequestVote with smaller term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
 		DPrintf("Peer[%d]: RequestVote response: %+v", rf.me, *reply)
@@ -52,7 +53,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 	if args.Term > rf.currentTerm {
-		DPrintf("Peer[%d]: AppendEntry with higher term received, convert to follower", rf.me)
+		DPrintf("Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
 		rf.currentTerm = args.Term
 		reply.Success = true
@@ -61,7 +62,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 	if args.Term < rf.currentTerm {
-		DPrintf("Peer[%d]: Reject AppendEntry RPC with smaller term number", rf.me)
+		DPrintf("Peer[%d]: AppendEntries with smaller term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		reply.Term = rf.currentTerm
 		reply.Success = false
 		DPrintf("Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
