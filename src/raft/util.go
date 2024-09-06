@@ -8,12 +8,19 @@ import (
 )
 
 // Debugging
-const Debug = false
+const Debug = true
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
-		// log.SetFlags(log.Ltime | log.Lmicroseconds)
+		log.SetFlags(log.Ltime | log.Lmicroseconds)
 		log.Printf(format, a...)
+	}
+	return
+}
+
+func DPrintln(a ...interface{}) (n int, err error) {
+	if Debug {
+		log.Println(a...)
 	}
 	return
 }

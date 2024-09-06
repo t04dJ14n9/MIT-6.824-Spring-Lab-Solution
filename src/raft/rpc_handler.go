@@ -82,6 +82,14 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
+	// reset election timeout first because this appendEntry is valid
+	if rf.role == candidate {
+		DPrintf("Peer[%d]: candidate to follower", rf.me)
+		rf.role = follower
+	}
+	rf.electionTimeoutBaseline = time.Now()
+	rf.resetElectionTimeoutDuration()
+
 	// term number is the same as rf.currentTerm
 	// reply false if log does not contain an entry at prevLogIndex whose term matches prevLogTerm
 	if rf.getLogLength()-1 < args.PrevLogIndex ||
@@ -94,17 +102,10 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
-	if rf.role == candidate {
-		DPrintf("Peer[%d]: candidate to follower", rf.me)
-		rf.role = follower
-	}
-	rf.electionTimeoutBaseline = time.Now()
-	rf.resetElectionTimeoutDuration()
-
 	if len(args.Entries) != 0 {
 		DPrintf("Peer[%d]: Append Entries to log: %+v", rf.me, args.Entries)
 	}
-	DPrintf("Peer[%d] log %v", rf.me, rf.log)
+	DPrintf("Peer[%d]: log before: %v", rf.me, rf.log)
 
 	// if an existing entry conflicts with a new one, delete the existing entry and all that follow it
 	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i < rf.getLogLength(); i++ {
@@ -114,6 +115,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		}
 	}
 	rf.log = append(rf.log, args.Entries...)
+	DPrintf("Peer[%d]: log after: %v", rf.me, rf.log)
 	if args.LeaderCommit > rf.commitIndex {
 		DPrintf("Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
 		rf.commitIndex = args.LeaderCommit
