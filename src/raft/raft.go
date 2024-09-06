@@ -41,7 +41,6 @@ type Raft struct {
 	// state a Raft server must maintain.
 
 	role        Role
-	leaderID    int
 	currentTerm int
 	votedFor    int
 	log         []LogEntry
@@ -135,7 +134,6 @@ func Make(peers []*labrpc.ClientEnd, me int,
 		persister:   persister,
 		me:          me,
 		role:        follower,
-		leaderID:    -1,
 		currentTerm: 0,
 		votedFor:    -1,
 		log:         make([]LogEntry, 1),

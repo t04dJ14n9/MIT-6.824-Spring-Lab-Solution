@@ -416,7 +416,7 @@ func TestRejoin2B(t *testing.T) {
 	DPrintf("!!!!! old leader connected again: cfg.connect(%d)", leader1)
 	cfg.connect(leader1)
 
-	DPrintf("!!!!! cfg.one(102, 2, true)")
+	DPrintf("!!!!! cfg.one(104, 2, true)")
 	cfg.one(104, 2, true)
 
 	// all together now

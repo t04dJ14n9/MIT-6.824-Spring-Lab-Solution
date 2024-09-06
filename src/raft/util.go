@@ -1,6 +1,7 @@
 package raft
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"sync/atomic"
@@ -23,6 +24,16 @@ func DPrintln(a ...interface{}) (n int, err error) {
 		log.Println(a...)
 	}
 	return
+}
+
+func DPrint(a ...interface{}) (n int, err error) {
+	if Debug {
+		log.Print(a...)
+	}
+	return
+}
+func AddToLogMsg(logMsg string, format string, a ...interface{}) string {
+	return logMsg + fmt.Sprintf(format+"\n", a...)
 }
 
 // Get the last index of self's log, to be modified to adapt to snapshot
