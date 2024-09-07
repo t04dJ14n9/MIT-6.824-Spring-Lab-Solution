@@ -27,12 +27,19 @@ func (rf *Raft) appendEntryRoutine() {
 
 func (rf *Raft) doAppendEntryForPeer(peer int) {
 	prevLogIndex := rf.nextIndex[peer] - 1
+
+	// copy log to send.
+	// since the testing env is simulated on local machine, if logToSend is not copied, race condition will happen since no lock is held in rf.sendAppendEntries
+	logToSend := rf.log[(prevLogIndex + 1):]
+	logToSendCopies := make([]LogEntry, len(logToSend))
+	copy(logToSendCopies, logToSend)
+
 	arg := AppendEntriesArgs{
 		Term:         rf.currentTerm,
 		LeaderID:     rf.me,
 		PrevLogIndex: prevLogIndex,
 		PrevLogTerm:  rf.log[prevLogIndex].Term,
-		Entries:      rf.log[(prevLogIndex + 1):],
+		Entries:      logToSendCopies,
 		LeaderCommit: rf.commitIndex,
 	}
 	var reply AppendEntriesReply
