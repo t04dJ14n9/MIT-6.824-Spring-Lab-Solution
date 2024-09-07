@@ -9,7 +9,7 @@ import (
 )
 
 // Debugging
-const Debug = true
+const Debug = false
 
 func DPrintf(format string, a ...interface{}) (n int, err error) {
 	if Debug {
@@ -33,7 +33,7 @@ func DPrint(a ...interface{}) (n int, err error) {
 	return
 }
 func AddToLogMsg(logMsg string, format string, a ...interface{}) string {
-	return logMsg + fmt.Sprintf(format+"\n", a...)
+	return logMsg + fmt.Sprintf(format+"\n"+"                ", a...)
 }
 
 // Get the last index of self's log, to be modified to adapt to snapshot

@@ -387,43 +387,43 @@ func TestRejoin2B(t *testing.T) {
 
 	cfg.begin("Test (2B): rejoin of partitioned leader")
 
-	DPrintf("!!!!! cfg.one(101, %d, true)", servers)
+	DPrintf("!!!!! cfg.one(101, %d, true)\n\n", servers)
 	cfg.one(101, servers, true)
 
 	// leader network failure
 	leader1 := cfg.checkOneLeader()
-	DPrintf("!!!!!leader network failure: cfg.disconnect(%d)", leader1)
+	DPrintf("!!!!!leader network failure: cfg.disconnect(%d)\n\n", leader1)
 	cfg.disconnect(leader1)
 
 	// make old leader try to agree on some entries
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(102)", leader1)
+	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(102)\n\n", leader1)
 	cfg.rafts[leader1].Start(102)
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(103)", leader1)
+	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(103)\n\n", leader1)
 	cfg.rafts[leader1].Start(103)
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(104)", leader1)
+	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(104)\n\n", leader1)
 	cfg.rafts[leader1].Start(104)
 
 	// new leader commits, also for index=2
-	DPrintf("!!!!! new leader commits, also for index=2: cfg.one(103,2,true)")
+	DPrintf("!!!!! new leader commits, also for index=2: cfg.one(103,2,true)\n\n")
 	cfg.one(103, 2, true)
 
 	// new leader network failure
 	leader2 := cfg.checkOneLeader()
-	DPrintf("!!!!! new leader network failure: cfg.disconnect(%d)", leader2)
+	DPrintf("!!!!! new leader network failure: cfg.disconnect(%d)\n\n", leader2)
 	cfg.disconnect(leader2)
 
 	// old leader connected again
-	DPrintf("!!!!! old leader connected again: cfg.connect(%d)", leader1)
+	DPrintf("!!!!! old leader connected again: cfg.connect(%d)\n\n", leader1)
 	cfg.connect(leader1)
 
-	DPrintf("!!!!! cfg.one(104, 2, true)")
+	DPrintf("!!!!! cfg.one(104, 2, true)\n\n")
 	cfg.one(104, 2, true)
 
 	// all together now
-	DPrintf("!!!!! all together now: cfg.connect(%d)", leader2)
+	DPrintf("!!!!! all together now: cfg.connect(%d)\n\n", leader2)
 	cfg.connect(leader2)
 
-	DPrintf("!!!!! cfg.one(105, %d, true)", servers)
+	DPrintf("!!!!! cfg.one(105, %d, true)\n\n", servers)
 	cfg.one(105, servers, true)
 
 	cfg.end()

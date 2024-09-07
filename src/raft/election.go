@@ -55,19 +55,22 @@ func (rf *Raft) doElection() {
 	for {
 		reply := <-replyChannel
 		rf.mu.Lock()
-		DPrintf("Peer[%d]: received reply %+v", rf.me, reply)
+		logMsg := ""
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: received reply %+v", rf.me, reply)
 
 		// if while waiting for the reply, an appendEntry RPC with equal or higher term is received,
 		// turn to follower and reset election timeout
 		if rf.role == follower {
-			DPrintf("Peer[%d]: already turned to follower while receiving reply", rf.me)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: already turned to follower while receiving reply", rf.me)
+			DPrint(logMsg)
 			rf.mu.Unlock()
 			return
 		}
 
 		// if election timeout while waiting for reply
 		if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
-			DPrintf("Peer[%d]: wait for reply timeout", rf.me)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout", rf.me)
+			DPrint(logMsg)
 			rf.mu.Unlock()
 			return
 		}
@@ -76,14 +79,16 @@ func (rf *Raft) doElection() {
 		if reply.Term > rf.currentTerm {
 			rf.currentTerm = reply.Term
 			rf.role = follower
-			DPrintf("Peer[%d]: reply with higher term received, turning to follower", rf.me)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: reply with higher term received, turning to follower", rf.me)
+			DPrint(logMsg)
 			rf.mu.Unlock()
 			return
 		}
 
 		// if term changed while waiting for reply, abort election
 		if currentTerm != rf.currentTerm {
-			DPrintf("Peer[%d]: term changed while waiting, abort election", rf.me)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
+			DPrint(logMsg)
 			rf.mu.Unlock()
 			return
 		}
@@ -91,15 +96,17 @@ func (rf *Raft) doElection() {
 		if reply.VoteGranted {
 			approveCount += 1
 		}
-		DPrintf("Peer[%d]: approveCount = %d", rf.me, approveCount)
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: approveCount = %d", rf.me, approveCount)
 
 		// check if received majority of vote
 		if approveCount > len(rf.peers)/2 {
-			DPrintf("Peer[%d] turns to leader", rf.me)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d] turns to leader. %+v", rf.me, rf)
 			rf.leaderInitialization()
 			rf.mu.Unlock()
+			DPrint(logMsg)
 			return
 		}
+		DPrint(logMsg)
 		rf.mu.Unlock()
 	}
 }
@@ -109,8 +116,12 @@ func (rf *Raft) leaderInitialization() {
 	rf.nextIndex = make([]int, len(rf.peers))
 	rf.matchIndex = make([]int, len(rf.peers))
 	args := AppendEntriesArgs{
-		Term:     rf.currentTerm,
-		LeaderID: rf.me,
+		Term:         rf.currentTerm,
+		LeaderID:     rf.me,
+		PrevLogIndex: rf.getLastLogIndex(),
+		PrevLogTerm:  rf.log[rf.getLastLogIndex()].Term,
+		Entries:      []LogEntry{},
+		LeaderCommit: rf.commitIndex,
 	}
 	for peer := 0; peer < len(rf.peers); peer += 1 {
 		if peer == rf.me {

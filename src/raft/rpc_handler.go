@@ -19,10 +19,9 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
 		rf.currentTerm = args.Term
-		rf.votedFor = args.CandidateID
-		reply.Term = args.Term
-		reply.VoteGranted = true
-		return
+		rf.resetElectionTimeoutDuration()
+		rf.electionTimeoutBaseline = time.Now()
+		rf.votedFor = -1
 	}
 
 	// reject requests with smaller term number
@@ -42,8 +41,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	}
 
 	// if candidate's log is not as up-to-date as receiver's log, reject
-	if args.Term == rf.currentTerm && args.LastLogIndex < rf.getLastLogIndex() || // same term, higher last index means more up-to-date
-		args.Term < rf.currentTerm { // different term, higher term means more up-to-date
+	if args.LastLogTerm == rf.getLastLogTerm() && args.LastLogIndex < rf.getLastLogIndex() || // same term, higher last index means more up-to-date
+		args.LastLogTerm < rf.getLastLogTerm() { // different term, higher term means more up-to-date
 		logMsg = AddToLogMsg(logMsg, "candidate's log is not as up-to-date as receiver's log, reject")
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
@@ -76,9 +75,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.role = follower
 		rf.currentTerm = args.Term
 		rf.votedFor = -1
-		reply.Success = true
-		reply.Term = args.Term
-		return
 	}
 	if args.Term < rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with smaller term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
@@ -113,7 +109,8 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 	// if an existing entry conflicts with a new one, delete the existing entry and all that follow it
 	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i < rf.getLogLength(); i++ {
-		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[i].Term || args.Entries[i-args.PrevLogIndex-1].Command != rf.log[i].Command {
+		// Log Matching Property ensures that if index and term are the same, all log entries up through this index is the same
+		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[i].Term { //|| args.Entries[i-args.PrevLogIndex-1].Command != rf.log[i].Command {
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: remove log after %d-th index", rf.me, i)
 			rf.log = rf.log[:i]
 		}
