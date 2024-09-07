@@ -123,7 +123,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// update commitIndex
 	if args.LeaderCommit > rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
-		rf.commitIndex = min(rf.getLastLogIndex(), args.LeaderCommit)
+		rf.commitIndex = minInt(rf.getLastLogIndex(), args.LeaderCommit)
 	}
 	reply.Term = rf.currentTerm
 	reply.Success = true

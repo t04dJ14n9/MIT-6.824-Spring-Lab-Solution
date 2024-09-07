@@ -107,3 +107,10 @@ func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)
 	return z == 1
 }
+
+func minInt(a int, b int) int {
+	if a > b {
+		return b
+	}
+	return a
+}
