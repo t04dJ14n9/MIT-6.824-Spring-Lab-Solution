@@ -1,7 +1,7 @@
 i=1
 while true; do
     # Run go test and store output in a log file
-    go test -race -run "2A2B" > ./logs/2A2B_${i}.log
+    go test -race -run "2A|2B" > ./logs/2A2B_${i}.log
     
     # Check the previous log file for FAIL if it's not the first iteration
     if [ $i -gt 1 ]; then
