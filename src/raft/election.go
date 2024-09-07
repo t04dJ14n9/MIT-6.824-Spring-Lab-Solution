@@ -21,7 +21,7 @@ func (rf *Raft) electionRoutine() {
 }
 
 func (rf *Raft) doElection() {
-	DPrintf("Peer[%d] doElection", rf.me)
+	DPrintf("Peer[%d] doElection, resetting electionTimout", rf.me)
 	rf.currentTerm += 1
 	rf.role = candidate
 	rf.electionTimeoutBaseline = time.Now()
@@ -100,7 +100,7 @@ func (rf *Raft) doElection() {
 
 		// check if received majority of vote
 		if approveCount > len(rf.peers)/2 {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d] turns to leader. %+v", rf.me, rf)
+			logMsg = AddToLogMsg(logMsg, "Peer[%d] turns to leader.", rf.me)
 			rf.leaderInitialization()
 			rf.mu.Unlock()
 			DPrint(logMsg)

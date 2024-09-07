@@ -12,7 +12,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote reply = %+v", rf.me, reply)
 		DPrint(logMsg)
 	}()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote received: %+v", rf.me, *args)
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote received: %+v. Time since electionbaseline: %+v.",
+		rf.me, *args, time.Since(rf.electionTimeoutBaseline))
 
 	// if RPC request with higher term received, convert to follower
 	if args.Term > rf.currentTerm {
@@ -51,6 +52,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// vote granted
 	rf.currentTerm = args.Term
 	rf.votedFor = args.CandidateID
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: resetting election timeout for granting vote", rf.me)
 	rf.resetElectionTimeoutDuration()
 	rf.electionTimeoutBaseline = time.Now()
 	reply.Term = args.Term
@@ -80,6 +82,13 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
+	if rf.role == leader {
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: reject appendEntries with same term as leader", rf.me)
+		reply.Term = rf.currentTerm
+		reply.Success = false
+		return
+	}
+
 	if rf.role == candidate {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: candidate to follower", rf.me)
 		rf.role = follower
@@ -89,6 +98,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// reset election timeout only when:
 	// 1. begin another round of election (follower timeout or candidate start another round of election)
 	// 2. receive appendEntry RPC only from leader of **current term**
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: resetting election timeout for receiving append entries from leader of current term", rf.me)
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 
