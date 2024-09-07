@@ -21,7 +21,7 @@ func (rf *Raft) electionRoutine() {
 }
 
 func (rf *Raft) doElection() {
-	DPrintf("Peer[%d] election timeout", rf.me)
+	DPrintf("Peer[%d] doElection", rf.me)
 	rf.currentTerm += 1
 	rf.role = candidate
 	rf.electionTimeoutBaseline = time.Now()

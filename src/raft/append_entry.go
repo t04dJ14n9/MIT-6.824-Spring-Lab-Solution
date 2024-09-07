@@ -45,12 +45,11 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 		defer rf.mu.Unlock()
 		DPrintf("Peer[%d] => Peer[%d]: AppendEntry response received %+v", rf.me, peer, reply)
 		if reply.Term > rf.currentTerm {
-			DPrintf("Peer[%d] => Peer[%d]: Received AppendEntries reply with higher term %d with currentTerm %d, convert to follower",
+			DPrintf("Peer[%d] => Peer[%d]: Received AppendEntries reply with higher term: %d, currentTerm: %d. Convert to follower",
 				rf.me, peer, reply.Term, rf.currentTerm)
-			rf.electionTimeoutBaseline = time.Now()
-			rf.resetElectionTimeoutDuration()
 			rf.currentTerm = reply.Term
 			rf.role = follower
+			rf.votedFor = -1
 			return
 		}
 		if reply.Success {

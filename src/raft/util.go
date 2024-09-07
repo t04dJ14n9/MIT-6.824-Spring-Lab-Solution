@@ -93,7 +93,7 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel 
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
-	DPrintf("Peer[%d] -> Peer[%d]: AppendEntry args %+v", rf.me, server, args)
+	DPrintf("Peer[%d] => Peer[%d]: AppendEntry args %+v", rf.me, server, args)
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
 	return ok
 }

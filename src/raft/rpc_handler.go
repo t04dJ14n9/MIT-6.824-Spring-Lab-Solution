@@ -19,8 +19,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
 		rf.currentTerm = args.Term
-		rf.resetElectionTimeoutDuration()
-		rf.electionTimeoutBaseline = time.Now()
+		// does not reset election timeout to avoid endless loop
 		rf.votedFor = -1
 	}
 
@@ -43,7 +42,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// if candidate's log is not as up-to-date as receiver's log, reject
 	if args.LastLogTerm == rf.getLastLogTerm() && args.LastLogIndex < rf.getLastLogIndex() || // same term, higher last index means more up-to-date
 		args.LastLogTerm < rf.getLastLogTerm() { // different term, higher term means more up-to-date
-		logMsg = AddToLogMsg(logMsg, "candidate's log is not as up-to-date as receiver's log, reject")
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: candidate's log is not as up-to-date as receiver's log, reject", rf.me)
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
 		return
@@ -70,8 +69,6 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}()
 	if args.Term > rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
-		rf.resetElectionTimeoutDuration()
-		rf.electionTimeoutBaseline = time.Now()
 		rf.role = follower
 		rf.currentTerm = args.Term
 		rf.votedFor = -1
@@ -83,11 +80,15 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		return
 	}
 
-	// reset election timeout first because this appendEntry is valid
 	if rf.role == candidate {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: candidate to follower", rf.me)
 		rf.role = follower
 	}
+
+	// reset election timeout first and check whether reject or accept request because this appendEntry is from current leader
+	// reset election timeout only when:
+	// 1. begin another round of election (follower timeout or candidate start another round of election)
+	// 2. receive appendEntry RPC only from leader of **current term**
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 
@@ -115,8 +116,11 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 			rf.log = rf.log[:i]
 		}
 	}
+	// Append log entries in args
 	rf.log = append(rf.log, args.Entries...)
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log after: %v", rf.me, rf.log)
+
+	// update commitIndex
 	if args.LeaderCommit > rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
 		rf.commitIndex = min(rf.getLastLogIndex(), args.LeaderCommit)
