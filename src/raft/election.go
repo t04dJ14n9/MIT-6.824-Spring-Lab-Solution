@@ -139,12 +139,6 @@ func (rf *Raft) leaderInitialization() {
 		rf.nextIndex[peer] = rf.getLastLogIndex() + 1
 		rf.matchIndex[peer] = 0
 	}
-
-	// send empty appendEntries for each peer
-	for peer := 0; peer < len(rf.peers); peer += 1 {
-		if peer == rf.me {
-			continue
-		}
-		rf.doAppendEntryForPeer(peer)
-	}
+	// trigger leader election
+	rf.appendEntryBaseline = time.Time{}
 }

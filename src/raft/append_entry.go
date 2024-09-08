@@ -8,14 +8,21 @@ import (
 func (rf *Raft) appendEntryRoutine() {
 	for !rf.killed() {
 		rf.mu.Lock()
-		if rf.role == leader && time.Since(rf.appendEntryBaseline) > rf.appendEntryDuration {
-			rf.appendEntryBaseline = time.Now()
-			for peer := 0; peer < len(rf.peers); peer++ {
-				if peer == rf.me {
-					continue
+		// if time passed since last check time > duration, check if it is leader
+		if time.Since(rf.appendEntryBaseline) > rf.appendEntryDuration {
+			// if is leader, start append entry for each peer
+			if rf.role == leader {
+				for peer := 0; peer < len(rf.peers); peer++ {
+					if peer == rf.me {
+						continue
+					}
+					rf.doAppendEntryForPeer(peer)
 				}
-				rf.doAppendEntryForPeer(peer)
 			}
+
+			// reset last check time disregarding role
+			rf.appendEntryBaseline = time.Now()
+
 			rf.mu.Unlock()
 			goto SLEEP
 		}

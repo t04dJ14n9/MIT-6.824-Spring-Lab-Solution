@@ -69,6 +69,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
 		DPrint(logMsg)
 	}()
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: Receive AppendEntries: %+v", rf.me, args)
 	if args.Term > rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
