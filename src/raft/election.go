@@ -46,6 +46,7 @@ func (rf *Raft) doElection() {
 
 	// save the currentTerm
 	currentTerm := rf.currentTerm
+	done := time.After(rf.electionTimeoutDuration)
 
 	rf.mu.Unlock()
 
@@ -59,73 +60,81 @@ func (rf *Raft) doElection() {
 	}
 
 	for {
-		reply := <-replyChannel
-		rf.mu.Lock()
-		receivedCount += 1
-		logMsg := ""
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: received reply %+v", rf.me, reply)
+		select {
+		case reply := <-replyChannel:
+			rf.mu.Lock()
+			receivedCount += 1
+			logMsg := ""
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: received reply %+v", rf.me, reply)
 
-		// if while waiting for the reply, an appendEntry RPC with equal or higher term is received,
-		// turn to follower and reset election timeout
-		if rf.role == follower {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: already turned to follower while receiving reply", rf.me)
+			// if while waiting for the reply, an appendEntry RPC with equal or higher term is received,
+			// turn to follower and reset election timeout
+			if rf.role == follower {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: already turned to follower while receiving reply", rf.me)
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+
+			// if election timeout while waiting for reply
+			if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout. candidate => followerv", rf.me)
+				rf.role = follower
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+
+			// if a reply with higher term is received, turn to follower
+			if reply.Term > rf.currentTerm {
+				rf.currentTerm = reply.Term
+				rf.role = follower
+				rf.votedFor = -1
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: reply with higher term received. candidate => follower", rf.me)
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+
+			// if term changed while waiting for reply, abort election
+			if currentTerm != rf.currentTerm {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+
+			if reply.VoteGranted {
+				approveCount += 1
+			}
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: approveCount = %d", rf.me, approveCount)
+
+			// if received majority of vote
+			if approveCount > len(rf.peers)/2 {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wins election. candidate => leader.", rf.me)
+				rf.leaderInitialization()
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+
+			// did not receive the majority of vote and all replies was received
+			if receivedCount == len(rf.peers) {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote. candidate => follower")
+				rf.role = follower
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
 			DPrint(logMsg)
 			rf.mu.Unlock()
-			return
-		}
-
-		// if election timeout while waiting for reply
-		if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout. candidate => followerv", rf.me)
+		case <-done:
+			rf.mu.Lock()
+			DPrintf("Peer[%d]: wait for reply timeout. candidate => followerv", rf.me)
 			rf.role = follower
-			DPrint(logMsg)
 			rf.mu.Unlock()
 			return
 		}
-
-		// if a reply with higher term is received, turn to follower
-		if reply.Term > rf.currentTerm {
-			rf.currentTerm = reply.Term
-			rf.role = follower
-			rf.votedFor = -1
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: reply with higher term received. candidate => follower", rf.me)
-			DPrint(logMsg)
-			rf.mu.Unlock()
-			return
-		}
-
-		// if term changed while waiting for reply, abort election
-		if currentTerm != rf.currentTerm {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
-			DPrint(logMsg)
-			rf.mu.Unlock()
-			return
-		}
-
-		if reply.VoteGranted {
-			approveCount += 1
-		}
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: approveCount = %d", rf.me, approveCount)
-
-		// if received majority of vote
-		if approveCount > len(rf.peers)/2 {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: wins election. candidate => leader.", rf.me)
-			rf.leaderInitialization()
-			DPrint(logMsg)
-			rf.mu.Unlock()
-			return
-		}
-
-		// did not receive the majority of vote and all replies was received
-		if receivedCount == len(rf.peers) {
-			logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote. candidate => follower")
-			rf.role = follower
-			DPrint(logMsg)
-			rf.mu.Unlock()
-			return
-		}
-		DPrint(logMsg)
-		rf.mu.Unlock()
 	}
 }
 
