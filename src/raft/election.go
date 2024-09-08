@@ -32,6 +32,7 @@ func (rf *Raft) doElection() {
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 	rf.votedFor = rf.me
+	rf.persist()
 	// number of peers that approve the vote in current round of election
 	// set to 1 since candidate votes for itself
 	approveCount := 1
@@ -78,8 +79,7 @@ func (rf *Raft) doElection() {
 
 			// if election timeout while waiting for reply
 			if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout. candidate => followerv", rf.me)
-				rf.role = follower
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout.", rf.me)
 				DPrint(logMsg)
 				rf.mu.Unlock()
 				return
@@ -90,6 +90,7 @@ func (rf *Raft) doElection() {
 				rf.currentTerm = reply.Term
 				rf.role = follower
 				rf.votedFor = -1
+				rf.persist()
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: reply with higher term received. candidate => follower", rf.me)
 				DPrint(logMsg)
 				rf.mu.Unlock()
@@ -120,8 +121,7 @@ func (rf *Raft) doElection() {
 
 			// did not receive the majority of vote and all replies was received
 			if receivedCount == len(rf.peers) {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote. candidate => follower")
-				rf.role = follower
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote. ")
 				DPrint(logMsg)
 				rf.mu.Unlock()
 				return
@@ -130,8 +130,7 @@ func (rf *Raft) doElection() {
 			rf.mu.Unlock()
 		case <-done:
 			rf.mu.Lock()
-			DPrintf("Peer[%d]: wait for reply timeout. candidate => followerv", rf.me)
-			rf.role = follower
+			DPrintf("Peer[%d]: wait for reply timeout. ", rf.me)
 			rf.mu.Unlock()
 			return
 		}

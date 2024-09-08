@@ -90,6 +90,7 @@ func (rf *Raft) Start(command interface{}) (index int, term int, isLeader bool) 
 	rf.log = append(rf.log, le)
 	index = rf.getLastLogIndex()
 	term = rf.currentTerm
+	rf.persist()
 	DPrintf("Peer[%d]: start consensus with command %v, logEntry %v, index %v", rf.me, command, le, index)
 
 	return

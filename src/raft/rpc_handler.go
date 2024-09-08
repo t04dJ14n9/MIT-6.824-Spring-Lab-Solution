@@ -22,6 +22,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		rf.currentTerm = args.Term
 		// does not reset election timeout to avoid endless loop
 		rf.votedFor = -1
+		rf.persist()
 	}
 
 	// reject requests with smaller term number
@@ -52,6 +53,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	// vote granted
 	rf.currentTerm = args.Term
 	rf.votedFor = args.CandidateID
+	rf.persist()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: resetting election timeout for granting vote", rf.me)
 	rf.resetElectionTimeoutDuration()
 	rf.electionTimeoutBaseline = time.Now()
@@ -75,6 +77,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.role = follower
 		rf.currentTerm = args.Term
 		rf.votedFor = -1
+		rf.persist()
 	}
 	if args.Term < rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with smaller term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
@@ -125,10 +128,12 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[i].Term { //|| args.Entries[i-args.PrevLogIndex-1].Command != rf.log[i].Command {
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: remove log after %d-th index", rf.me, i)
 			rf.log = rf.log[:i]
+			rf.persist()
 		}
 	}
 	// Append log entries in args
 	rf.log = append(rf.log, args.Entries...)
+	rf.persist()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log after: %v", rf.me, rf.log)
 
 	// update commitIndex

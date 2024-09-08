@@ -64,6 +64,7 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 			rf.currentTerm = reply.Term
 			rf.role = follower
 			rf.votedFor = -1
+			rf.persist()
 			return
 		}
 		if reply.Success {
