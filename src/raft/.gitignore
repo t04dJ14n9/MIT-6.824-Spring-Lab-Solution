@@ -1,2 +1,3 @@
 res*
 logs/*.log
+pid

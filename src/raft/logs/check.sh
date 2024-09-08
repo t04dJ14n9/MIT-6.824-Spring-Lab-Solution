@@ -2,4 +2,11 @@
 
 # Iterate over all files in the current directory
 
-for file in *; do  if [ -f "$file" ]; then echo $file $(tail -n 1 "$file"); fi; done | grep FAIL
+for file in *; do  
+  if [ -f "$file" ]; then 
+    grep "FAIL: Test" "$file" && echo -n "File: $file"
+    grep "RACE" "$file" && echo -n "File: $file"
+    grep "Race" "$file" && echo -n "File: $file"
+    grep "race" "$file" && echo -n "File: $file"
+  fi
+done
