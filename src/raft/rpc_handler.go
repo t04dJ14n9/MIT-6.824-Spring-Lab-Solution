@@ -133,6 +133,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 	// Append log entries in args
 	rf.log = append(rf.log, args.Entries...)
+
 	rf.persist()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log after: %v", rf.me, rf.log)
 
@@ -143,5 +144,14 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	}
 	reply.Term = rf.currentTerm
 	reply.Success = true
+	return
+}
+
+// idempotent application of log entries in the request to local log
+func (rf *Raft) applyEntriesToLog(entries []LogEntry, prevLogIndex int) {
+	for i := prevLogIndex + 1; i <= len(rf.log)-1; i++ {
+		rf.log[i] = entries[i-prevLogIndex-1]
+	}
+	rf.log = append(rf.log, entries[len(rf.log)-prevLogIndex-1])
 	return
 }

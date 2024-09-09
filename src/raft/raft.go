@@ -152,7 +152,7 @@ func Make(peers []*labrpc.ClientEnd, me int,
 	rf.resetElectionTimeoutDuration()
 	rf.electionTimeoutBaseline = time.Now()
 	rf.appendEntryBaseline = time.Now()
-	rf.appendEntryDuration = 120 * time.Millisecond
+	rf.appendEntryDuration = 50 * time.Millisecond
 	// start ticker goroutine to start elections
 	go rf.electionRoutine()
 	go rf.appendEntryRoutine()

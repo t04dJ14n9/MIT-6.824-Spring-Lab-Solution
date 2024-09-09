@@ -10,7 +10,7 @@ const (
 	leader
 )
 
-var CheckInterval time.Duration = time.Millisecond * 10
+var CheckInterval time.Duration = time.Millisecond * 5
 
 const (
 	Reset  = "\033[0m"
