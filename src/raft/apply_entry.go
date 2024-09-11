@@ -6,7 +6,7 @@ func (rf *Raft) applyEntryRoutine() {
 	for !rf.killed() {
 		rf.mu.Lock()
 
-		if rf.commitIndex > rf.lastApplied {
+		for rf.commitIndex > rf.lastApplied {
 			rf.lastApplied++
 			applyMsg := ApplyMsg{
 				CommandValid: true,

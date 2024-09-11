@@ -61,35 +61,26 @@ func TestReElection2A(t *testing.T) {
 
 	leader1 := cfg.checkOneLeader()
 
-	// Log the disconnection of the leader
-	DPrintf("!!!!! Executing: cfg.disconnect(%d)", leader1)
 	// if the leader disconnects, a new one should be elected.
 	cfg.disconnect(leader1)
 	cfg.checkOneLeader()
 
-	// Log the reconnection of the leader
-	DPrintf("!!!!! Executing: cfg.connect(%d)", leader1)
 	// if the old leader rejoins, that shouldn't
 	// disturb the new leader.
 	cfg.connect(leader1)
 	leader2 := cfg.checkOneLeader()
 
-	// Log the disconnection of the new leader and another server
-	DPrintf("!!!!! Executing: cfg.disconnect(%d)", leader2)
+	// if there's no quorum, no leader should
+	// be elected.
 	cfg.disconnect(leader2)
-	DPrintf("!!!!! Executing: cfg.disconnect(%d)", (leader2+1)%servers)
 	cfg.disconnect((leader2 + 1) % servers)
 	time.Sleep(2 * RaftElectionTimeout)
 	cfg.checkNoLeader()
 
-	// Log the reconnection of a server to form a quorum
-	DPrintf("!!!!! Executing: cfg.connect(%d)", (leader2+1)%servers)
 	// if a quorum arises, it should elect a leader.
 	cfg.connect((leader2 + 1) % servers)
 	cfg.checkOneLeader()
 
-	// Log the reconnection of the last node
-	DPrintf("!!!!! Executing: cfg.connect(%d)", leader2)
 	// re-join of last node shouldn't prevent leader from existing.
 	cfg.connect(leader2)
 	cfg.checkOneLeader()
@@ -193,34 +184,26 @@ func TestFailAgree2B(t *testing.T) {
 
 	cfg.begin("Test (2B): agreement despite follower disconnection")
 
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(101, 3, false)"), string(Reset))
 	cfg.one(101, servers, false)
 
 	// disconnect one follower from the network.
 	leader := cfg.checkOneLeader()
-	DPrintln(string(Red), fmt.Sprintf("cfg.disconnect(%d)", (leader+1)%servers), string(Reset))
 	cfg.disconnect((leader + 1) % servers)
 
 	// the leader and remaining follower should be
 	// able to agree despite the disconnected follower.
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(102, 2, false)"), string(Reset))
 	cfg.one(102, servers-1, false)
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(103, 2, false)"), string(Reset))
 	cfg.one(103, servers-1, false)
 	time.Sleep(RaftElectionTimeout)
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(104, 2, false)"), string(Reset))
 	cfg.one(104, servers-1, false)
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(105, 2, false)"), string(Reset))
 	cfg.one(105, servers-1, false)
 
 	// re-connect
-	DPrintln(string(Red), fmt.Sprintf("cfg.connect(%d)", (leader+1)%servers), string(Reset))
 	cfg.connect((leader + 1) % servers)
 
 	// the full set of servers should preserve
 	// previous agreements, and be able to agree
 	// on new commands.
-	DPrintln(string(Red), fmt.Sprintf("cfg.one(106, 3, true)"), string(Reset))
 	cfg.one(106, servers, true)
 	time.Sleep(RaftElectionTimeout)
 	cfg.one(107, servers, true)
@@ -387,43 +370,32 @@ func TestRejoin2B(t *testing.T) {
 
 	cfg.begin("Test (2B): rejoin of partitioned leader")
 
-	DPrintf("!!!!! cfg.one(101, %d, true)\n\n", servers)
 	cfg.one(101, servers, true)
 
 	// leader network failure
 	leader1 := cfg.checkOneLeader()
-	DPrintf("!!!!!leader network failure: cfg.disconnect(%d)\n\n", leader1)
 	cfg.disconnect(leader1)
 
 	// make old leader try to agree on some entries
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(102)\n\n", leader1)
 	cfg.rafts[leader1].Start(102)
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(103)\n\n", leader1)
 	cfg.rafts[leader1].Start(103)
-	DPrintf("!!!!! make old leader try to agree on some entries: Peer[%d].Start(104)\n\n", leader1)
 	cfg.rafts[leader1].Start(104)
 
 	// new leader commits, also for index=2
-	DPrintf("!!!!! new leader commits, also for index=2: cfg.one(103,2,true)\n\n")
 	cfg.one(103, 2, true)
 
 	// new leader network failure
 	leader2 := cfg.checkOneLeader()
-	DPrintf("!!!!! new leader network failure: cfg.disconnect(%d)\n\n", leader2)
 	cfg.disconnect(leader2)
 
 	// old leader connected again
-	DPrintf("!!!!! old leader connected again: cfg.connect(%d)\n\n", leader1)
 	cfg.connect(leader1)
 
-	DPrintf("!!!!! cfg.one(104, 2, true)\n\n")
 	cfg.one(104, 2, true)
 
 	// all together now
-	DPrintf("!!!!! all together now: cfg.connect(%d)\n\n", leader2)
 	cfg.connect(leader2)
 
-	DPrintf("!!!!! cfg.one(105, %d, true)\n\n", servers)
 	cfg.one(105, servers, true)
 
 	cfg.end()

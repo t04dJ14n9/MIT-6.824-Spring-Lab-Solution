@@ -13,7 +13,7 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		DPrint(logMsg)
 	}()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote received: %+v",
-		args.CandidateID, rf.me, *args, time.Since(rf.electionTimeoutBaseline))
+		args.CandidateID, rf.me, *args)
 
 	// if RPC request with higher term received, convert to follower
 	if args.Term > rf.currentTerm {

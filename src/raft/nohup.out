@@ -1,2 +1,45 @@
 tail: cannot open './logs/2C_2.log' for reading: No such file or directory
 Checking logs/2C_2.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_2.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_2.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_3.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_3.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_4.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_4.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_5.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_5.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_6.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_6.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_7.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_7.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_8.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_8.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_9.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_9.log: 
+tail: cannot open './logs/TestUnreliableAgree2C_10.log' for reading: No such file or directory
+Checking logs/TestUnreliableAgree2C_10.log: 
+Reached the maximum iteration limit of 10, stopping...
+tail: cannot open './logs/TestFigure8Unreliable2C_2.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_2.log: 
+tail: cannot open './logs/TestFigure8Unreliable2C_3.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_3.log: 
+tail: cannot open './logs/TestFigure8Unreliable2C_2.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_2.log: 
+tail: cannot open './logs/TestFigure8Unreliable2C_3.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_3.log: 
+tail: cannot open './logs/TestFigure8Unreliable2C_4.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_4.log: 
+tail: cannot open './logs/TestFigure8Unreliable2C_5.log' for reading: No such file or directory
+Checking logs/TestFigure8Unreliable2C_5.log: 
+Reached the maximum iteration limit of 5, stopping...
+tail: cannot open './logs/Churn_2.log' for reading: No such file or directory
+Checking logs/Churn_2.log: 
+tail: cannot open './logs/Churn_3.log' for reading: No such file or directory
+Checking logs/Churn_3.log: 
+tail: cannot open './logs/Churn_4.log' for reading: No such file or directory
+Checking logs/Churn_4.log: 
+tail: cannot open './logs/Churn_5.log' for reading: No such file or directory
+Checking logs/Churn_5.log: 
+Reached the maximum iteration limit of 5, stopping...
+Checking logs/TestFigure8Unreliable2C_2.log: FAIL	6.824/raft	56.035s
+Test failed in iteration 2, stopping...
