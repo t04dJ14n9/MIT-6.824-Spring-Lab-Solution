@@ -9,11 +9,11 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	defer rf.mu.Unlock()
 	logMsg := ""
 	defer func() {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote reply = %+v", rf.me, reply)
+		logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote reply = %+v", rf.me, args.CandidateID, reply)
 		DPrint(logMsg)
 	}()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: RequestVote received: %+v. Time since electionbaseline: %+v.",
-		rf.me, *args, time.Since(rf.electionTimeoutBaseline))
+	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote received: %+v",
+		args.CandidateID, rf.me, *args, time.Since(rf.electionTimeoutBaseline))
 
 	// if RPC request with higher term received, convert to follower
 	if args.Term > rf.currentTerm {
@@ -68,10 +68,10 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	defer rf.mu.Unlock()
 	logMsg := ""
 	defer func() {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntry reply = %+v", rf.me, reply)
+		logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: AppendEntry reply = %+v", rf.me, args.LeaderID, reply)
 		DPrint(logMsg)
 	}()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: Receive AppendEntries: %+v", rf.me, args)
+	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: Receive AppendEntries: %+v", args.LeaderID, rf.me, args)
 	if args.Term > rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
@@ -132,7 +132,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		}
 	}
 	// Append log entries in args
-	rf.log = append(rf.log, args.Entries...)
+	rf.applyEntriesToLog(args.Entries, args.PrevLogIndex)
 
 	rf.persist()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log after: %v", rf.me, rf.log)
@@ -149,9 +149,13 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 
 // idempotent application of log entries in the request to local log
 func (rf *Raft) applyEntriesToLog(entries []LogEntry, prevLogIndex int) {
-	for i := prevLogIndex + 1; i <= len(rf.log)-1; i++ {
-		rf.log[i] = entries[i-prevLogIndex-1]
+	for i := 0; i < len(entries); i++ {
+		indexToInsert := prevLogIndex + i + 1
+		if indexToInsert >= len(rf.log) {
+			rf.log = append(rf.log, entries[i])
+			continue
+		}
+		rf.log[indexToInsert] = entries[i]
 	}
-	rf.log = append(rf.log, entries[len(rf.log)-prevLogIndex-1])
 	return
 }
