@@ -72,6 +72,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		DPrint(logMsg)
 	}()
 	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: Receive AppendEntries: %+v", args.LeaderID, rf.me, args)
+
 	if args.Term > rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
@@ -79,6 +80,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		rf.votedFor = -1
 		rf.persist()
 	}
+
 	if args.Term < rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with smaller term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		reply.Term = rf.currentTerm
@@ -114,6 +116,19 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 			args.PrevLogIndex, args.PrevLogTerm, rf.log)
 		reply.Success = false
 		reply.Term = rf.currentTerm
+		// if local log does not contain prevLogIndex
+		if rf.getLogLength()-1 < args.PrevLogIndex {
+			reply.ConflictIndex = rf.getLastLogIndex()
+			reply.ConflictTerm = rf.log[rf.getLastLogIndex()].Term
+			return
+		}
+		reply.ConflictTerm = rf.log[args.PrevLogIndex].Term
+		// set conflictIndex to be the index of the first entry with ConflictTerm
+		conflictIndex := args.PrevLogIndex - 1
+		for conflictIndex > 0 && rf.log[conflictIndex].Term == rf.log[args.PrevLogIndex].Term {
+			conflictIndex--
+		}
+		reply.ConflictIndex = conflictIndex + 1
 		return
 	}
 

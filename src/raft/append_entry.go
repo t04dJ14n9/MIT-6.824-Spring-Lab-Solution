@@ -73,7 +73,8 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 			rf.updateCommitIndex()
 		} else {
 			if rf.nextIndex[peer] > 1 {
-				rf.nextIndex[peer]--
+				rf.updateNextIndex(peer, &arg, reply.ConflictIndex, reply.ConflictTerm)
+				// rf.nextIndex[peer]--
 			}
 		}
 	}()
@@ -98,4 +99,32 @@ func (rf *Raft) updateCommitIndex() {
 		}
 		newCommitIndex--
 	}
+}
+
+func (rf *Raft) updateNextIndex(peer int, arg *AppendEntriesArgs, conflictIndex int, conflictTerm int) {
+	// if leader's log is shortened while waiting for the reply
+	if rf.getLastLogIndex() < arg.PrevLogIndex {
+		rf.nextIndex[peer] = maxInt(1, rf.getLastLogIndex())
+		return
+	}
+	// if the entire conflictTerm does not exist in leader's log, skip over the entire term
+	// case 1, conflictTerm is larger, impossible to get that term using backtracking
+	if conflictTerm > rf.log[arg.PrevLogIndex].Term {
+		rf.nextIndex[peer] = maxInt(1, conflictIndex)
+		return
+	}
+	// case 2, keep on backtracking until term is no larger than conflictTerm
+	i := arg.PrevLogIndex - 1
+	for i > 0 && rf.log[i].Term > conflictTerm {
+		i--
+	}
+	if rf.log[i].Term < conflictTerm {
+		// conflictTerm does not exist
+		rf.nextIndex[peer] = maxInt(1, conflictIndex)
+		return
+	}
+	// leader has conflictTerm in its log, set nextIndex to the last index of that term in its log
+	// i is the last index of conflictTerm
+	rf.nextIndex[peer] = maxInt(1, i)
+	return
 }
