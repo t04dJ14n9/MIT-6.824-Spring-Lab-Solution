@@ -82,8 +82,8 @@ func (rf *Raft) getLogLength() int {
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
 func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel chan<- RequestVoteReply) {
-	var reply RequestVoteReply
 	DPrintf("Peer[%d]: sendRequestVote to Peer[%d]. req = %+v", rf.me, server, *args)
+	var reply RequestVoteReply
 	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
 	if !ok {
 		replyChannel <- RequestVoteReply{Term: 0, VoteGranted: false}
@@ -96,6 +96,28 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	DPrintf("Peer[%d] => Peer[%d]: AppendEntry args %+v", rf.me, server, args)
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
 	return ok
+}
+
+func (rf *Raft) sendAppendEntriesWithTimeout(server int, args *AppendEntriesArgs, timeout time.Duration) (*AppendEntriesReply, bool) {
+	done := make(chan bool)
+	timeoutChan := time.After(timeout)
+	var ok bool
+	var reply AppendEntriesReply
+	// TODO
+	go func() {
+		ok = rf.sendAppendEntries(server, args, &reply)
+		done <- true
+	}()
+
+	select {
+	case <-done:
+		if ok {
+			return &reply, true
+		}
+		return nil, false
+	case <-timeoutChan:
+		return nil, false
+	}
 }
 
 // resetElectionTimeoutDuration resets electionTimeoutDuration to a random value between 300 - 450 milliseconds

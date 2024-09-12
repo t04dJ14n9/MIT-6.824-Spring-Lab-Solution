@@ -11,3 +11,5 @@ const (
 )
 
 var CheckInterval time.Duration = time.Millisecond * 5
+
+var RPCTimeout time.Duration = time.Millisecond * 100

@@ -49,9 +49,10 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 		Entries:      logToSendCopies,
 		LeaderCommit: rf.commitIndex,
 	}
-	var reply AppendEntriesReply
 	go func() {
-		if ok := rf.sendAppendEntries(peer, &arg, &reply); !ok {
+		var reply *AppendEntriesReply
+		reply, ok := rf.sendAppendEntriesWithTimeout(peer, &arg, (RPCTimeout))
+		if !ok {
 			DPrintf("Peer[%d] => Peer[%d]: AppendEntry failed", rf.me, peer)
 			return
 		}
