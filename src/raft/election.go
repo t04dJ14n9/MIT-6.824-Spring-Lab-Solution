@@ -46,44 +46,26 @@ func (rf *Raft) doElection() {
 	}
 
 	// save the currentTerm
-	currentTerm := rf.currentTerm
-	done := time.After(rf.electionTimeoutDuration)
+	savedTerm := rf.currentTerm
 
 	rf.mu.Unlock()
 
-	// send requestVote to all peers
-	replyChannel := make(chan RequestVoteReply, len(rf.peers))
 	for peer := 0; peer < len(rf.peers); peer++ {
 		if peer == rf.me {
 			continue
 		}
-		go rf.sendRequestVote(peer, &args, replyChannel)
-	}
-
-	for {
-		select {
-		case reply := <-replyChannel:
+		go func() {
+			var reply RequestVoteReply
+			ok := rf.sendRequestVote(peer, &args, &reply)
 			rf.mu.Lock()
 			receivedCount += 1
+			if !ok {
+				DPrintf("Peer[%d] => Peer[%d]: RequestVote failed", rf.me, peer)
+				rf.mu.Unlock()
+				return
+			}
 			logMsg := ""
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: received reply %+v", rf.me, reply)
-
-			// if while waiting for the reply, an appendEntry RPC with equal or higher term is received,
-			// turn to follower and reset election timeout
-			if rf.role == follower {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: already turned to follower while receiving reply", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
-				return
-			}
-
-			// if election timeout while waiting for reply
-			if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wait for reply timeout.", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
-				return
-			}
 
 			// if a reply with higher term is received, turn to follower
 			if reply.Term > rf.currentTerm {
@@ -97,14 +79,22 @@ func (rf *Raft) doElection() {
 				return
 			}
 
-			// if term changed while waiting for reply, abort election
-			if currentTerm != rf.currentTerm {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
+			// if no longer candidate while waiting for requestVote reply,
+			if rf.role != candidate {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: not candidate when receiving reply", rf.me)
 				DPrint(logMsg)
 				rf.mu.Unlock()
 				return
 			}
 
+			// if term changed while waiting for reply, abort election
+			if savedTerm != rf.currentTerm {
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
+				DPrint(logMsg)
+				rf.mu.Unlock()
+				return
+			}
+			
 			if reply.VoteGranted {
 				approveCount += 1
 			}
@@ -128,12 +118,7 @@ func (rf *Raft) doElection() {
 			}
 			DPrint(logMsg)
 			rf.mu.Unlock()
-		case <-done:
-			rf.mu.Lock()
-			DPrintf("Peer[%d]: wait for reply timeout. ", rf.me)
-			rf.mu.Unlock()
-			return
-		}
+		}()
 	}
 }
 

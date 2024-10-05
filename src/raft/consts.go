@@ -10,6 +10,10 @@ const (
 	leader
 )
 
-var CheckInterval time.Duration = time.Millisecond * 5
+var CheckInterval time.Duration = time.Millisecond * 10
 
-var RPCTimeout time.Duration = time.Millisecond * 100
+var ElectionTimeoutLow int = 300
+
+var ElectionTimeoutHigh int = 450
+
+var AppendEntryInterval time.Duration = time.Millisecond * 50

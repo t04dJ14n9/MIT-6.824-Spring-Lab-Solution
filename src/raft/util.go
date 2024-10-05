@@ -81,15 +81,10 @@ func (rf *Raft) getLogLength() int {
 // capitalized all field names in structs passed over RPC, and
 // that the caller passes the address of the reply struct with &, not
 // the struct itself.
-func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, replyChannel chan<- RequestVoteReply) {
+func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *RequestVoteReply) bool {
 	DPrintf("Peer[%d]: sendRequestVote to Peer[%d]. req = %+v", rf.me, server, *args)
-	var reply RequestVoteReply
 	ok := rf.peers[server].Call("Raft.RequestVote", args, &reply)
-	if !ok {
-		replyChannel <- RequestVoteReply{Term: 0, VoteGranted: false}
-	}
-	replyChannel <- reply
-	return
+	return ok
 }
 
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
@@ -98,48 +93,12 @@ func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *Ap
 	return ok
 }
 
-func (rf *Raft) sendAppendEntriesWithTimeout(server int, args *AppendEntriesArgs, timeout time.Duration) (*AppendEntriesReply, bool) {
-	done := make(chan bool)
-	timeoutChan := time.After(timeout)
-	var ok bool
-	var reply AppendEntriesReply
-	// TODO
-	go func() {
-		ok = rf.sendAppendEntries(server, args, &reply)
-		done <- true
-	}()
-
-	select {
-	case <-done:
-		if ok {
-			return &reply, true
-		}
-		return nil, false
-	case <-timeoutChan:
-		return nil, false
-	}
-}
-
-// resetElectionTimeoutDuration resets electionTimeoutDuration to a random value between 300 - 450 milliseconds
+// resetElectionTimeoutDuration resets electionTimeoutDuration to a random value between ElectionTimeLow - ElectionTimeHigh milliseconds
 func (rf *Raft) resetElectionTimeoutDuration() {
-	rf.electionTimeoutDuration = time.Duration(rand.Intn(300)+150) * time.Millisecond
+	rf.electionTimeoutDuration = time.Duration(rand.Intn(ElectionTimeoutLow)+(ElectionTimeoutHigh-ElectionTimeoutLow)) * time.Millisecond
 }
 
 func (rf *Raft) killed() bool {
 	z := atomic.LoadInt32(&rf.dead)
 	return z == 1
-}
-
-func minInt(a int, b int) int {
-	if a > b {
-		return b
-	}
-	return a
-}
-
-func maxInt(a int, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

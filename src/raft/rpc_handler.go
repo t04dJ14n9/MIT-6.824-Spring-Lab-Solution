@@ -4,7 +4,6 @@ import "time"
 
 // RequestVote RPC handler.
 func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
-	// Your code here (2A, 2B).
 	rf.mu.Lock()
 	defer rf.mu.Unlock()
 	logMsg := ""
@@ -33,9 +32,17 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		return
 	}
 
+	// if already voted for this candidate, grant vote
+	if rf.votedFor == args.CandidateID {
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: already voted for same candidate: %d, grant vote", rf.me, rf.votedFor)
+		reply.Term = rf.currentTerm
+		reply.VoteGranted = true
+		return
+	}
+
 	// if already voted for someone else, reject
-	if rf.votedFor != -1 && rf.votedFor != args.CandidateID {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: already voted for %d, reject RequestVote", rf.me, rf.votedFor)
+	if rf.votedFor != -1 {
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: already voted for someone else: %d, reject RequestVote", rf.me, rf.votedFor)
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
 		return
@@ -108,34 +115,32 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 
-	// term number is the same as rf.currentTerm
-	// reply false if log does not contain an entry at prevLogIndex whose term matches prevLogTerm
-	if rf.getLogLength()-1 < args.PrevLogIndex ||
-		rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d, log: %v", rf.me,
-			args.PrevLogIndex, args.PrevLogTerm, rf.log)
+	// does not contain an index at prevLogIndex
+	if rf.getLastLogIndex() < args.PrevLogIndex {
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d", rf.me,
+			args.PrevLogIndex, args.PrevLogTerm)
 		reply.Success = false
 		reply.Term = rf.currentTerm
-		// if local log does not contain prevLogIndex
-		if rf.getLogLength()-1 < args.PrevLogIndex {
-			reply.ConflictIndex = rf.getLastLogIndex()
-			reply.ConflictTerm = rf.log[rf.getLastLogIndex()].Term
-			return
-		}
+		reply.ConflictIndex = rf.getLastLogIndex()
+		reply.ConflictTerm = -1 // indicating non-existent
+		return
+	}
+
+	// contain an index at prevLogIndex but term does not match
+	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
+		logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d", rf.me,
+			args.PrevLogIndex, args.PrevLogTerm)
+		reply.Success = false
+		reply.Term = rf.currentTerm
 		reply.ConflictTerm = rf.log[args.PrevLogIndex].Term
 		// set conflictIndex to be the index of the first entry with ConflictTerm
-		conflictIndex := args.PrevLogIndex - 1
-		for conflictIndex > 0 && rf.log[conflictIndex].Term == rf.log[args.PrevLogIndex].Term {
+		conflictIndex := args.PrevLogIndex
+		for conflictIndex > 0 && rf.log[conflictIndex].Term == reply.ConflictTerm {
 			conflictIndex--
 		}
 		reply.ConflictIndex = conflictIndex + 1
 		return
 	}
-
-	if len(args.Entries) != 0 {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: Append Entries to log: %+v", rf.me, args.Entries)
-	}
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log before: %v", rf.me, rf.log)
 
 	// if an existing entry conflicts with a new one, delete the existing entry and all that follow it
 	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i < rf.getLogLength(); i++ {
@@ -150,12 +155,11 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	rf.applyEntriesToLog(args.Entries, args.PrevLogIndex)
 
 	rf.persist()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log after: %v", rf.me, rf.log)
 
 	// update commitIndex
 	if args.LeaderCommit > rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
-		rf.commitIndex = minInt(rf.getLastLogIndex(), args.LeaderCommit)
+		rf.commitIndex = min(rf.getLastLogIndex(), args.LeaderCommit)
 	}
 	reply.Term = rf.currentTerm
 	reply.Success = true

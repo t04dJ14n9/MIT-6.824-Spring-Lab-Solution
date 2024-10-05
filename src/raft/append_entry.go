@@ -33,14 +33,14 @@ func (rf *Raft) appendEntryRoutine() {
 }
 
 func (rf *Raft) doAppendEntryForPeer(peer int) {
-	prevLogIndex := rf.nextIndex[peer] - 1
-
 	// copy log to send.
 	// since the testing env is simulated on local machine, if logToSend is not copied, race condition will happen since no lock is held in rf.sendAppendEntries
-	logToSend := rf.log[(prevLogIndex + 1):]
+	logToSend := rf.log[rf.nextIndex[peer]:]
 	logToSendCopies := make([]LogEntry, len(logToSend))
+	saveTerm := rf.currentTerm
 	copy(logToSendCopies, logToSend)
 
+	prevLogIndex := rf.nextIndex[peer] - 1
 	arg := AppendEntriesArgs{
 		Term:         rf.currentTerm,
 		LeaderID:     rf.me,
@@ -50,8 +50,8 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 		LeaderCommit: rf.commitIndex,
 	}
 	go func() {
-		var reply *AppendEntriesReply
-		reply, ok := rf.sendAppendEntriesWithTimeout(peer, &arg, (RPCTimeout))
+		var reply AppendEntriesReply
+		ok := rf.sendAppendEntries(peer, &arg, &reply)
 		if !ok {
 			DPrintf("Peer[%d] => Peer[%d]: AppendEntry failed", rf.me, peer)
 			return
@@ -68,14 +68,20 @@ func (rf *Raft) doAppendEntryForPeer(peer int) {
 			rf.persist()
 			return
 		}
+
+		if rf.currentTerm != saveTerm || rf.role != leader {
+			DPrintf("Peer[%d] => Peer[%d]: term or role changed during appendEntry, abort", rf.me, peer)
+			return
+		}
+
 		if reply.Success {
-			rf.nextIndex[peer] = arg.PrevLogIndex + len(arg.Entries) + 1
-			rf.matchIndex[peer] = arg.PrevLogIndex + len(arg.Entries)
+			// maybe there has been a long delay and another round of append entry has increased the nextIndex and matchIndex
+			rf.nextIndex[peer] = max(rf.nextIndex[peer], arg.PrevLogIndex+len(arg.Entries)+1)
+			rf.matchIndex[peer] = max(rf.matchIndex[peer], arg.PrevLogIndex+len(arg.Entries))
 			rf.updateCommitIndex()
 		} else {
 			if rf.nextIndex[peer] > 1 {
 				rf.updateNextIndex(peer, &arg, reply.ConflictIndex, reply.ConflictTerm)
-				// rf.nextIndex[peer]--
 			}
 		}
 	}()
@@ -91,6 +97,7 @@ func (rf *Raft) updateCommitIndex() {
 		}
 	}
 	sort.Ints(sortedList)
+	// only commit log entries that is committed in current term
 	newCommitIndex := sortedList[len(rf.peers)/2]
 	for newCommitIndex > rf.commitIndex {
 		if rf.currentTerm == rf.log[newCommitIndex].Term {
@@ -103,29 +110,23 @@ func (rf *Raft) updateCommitIndex() {
 }
 
 func (rf *Raft) updateNextIndex(peer int, arg *AppendEntriesArgs, conflictIndex int, conflictTerm int) {
-	// if leader's log is shortened while waiting for the reply
-	if rf.getLastLogIndex() < arg.PrevLogIndex {
-		rf.nextIndex[peer] = maxInt(1, rf.getLastLogIndex())
-		return
-	}
-	// if the entire conflictTerm does not exist in leader's log, skip over the entire term
-	// case 1, conflictTerm is larger, impossible to get that term using backtracking
-	if conflictTerm > rf.log[arg.PrevLogIndex].Term {
-		rf.nextIndex[peer] = maxInt(1, conflictIndex)
+	// case 1, conflictTerm is larger or -1(None), impossible to get that term using backtracking
+	if conflictTerm > rf.log[arg.PrevLogIndex].Term || conflictTerm <= 0 {
+		rf.nextIndex[peer] = max(1, conflictIndex)
 		return
 	}
 	// case 2, keep on backtracking until term is no larger than conflictTerm
-	i := arg.PrevLogIndex - 1
+	i := arg.PrevLogIndex
 	for i > 0 && rf.log[i].Term > conflictTerm {
 		i--
 	}
+	// if the entire conflictTerm does not exist in leader's log, skip over the entire term
 	if rf.log[i].Term < conflictTerm {
-		// conflictTerm does not exist
-		rf.nextIndex[peer] = maxInt(1, conflictIndex)
+		rf.nextIndex[peer] = max(1, conflictIndex)
 		return
 	}
-	// leader has conflictTerm in its log, set nextIndex to the last index of that term in its log
+	// leader has conflictTerm in its log, set nextIndex to the one beyond last index of that term in its log
 	// i is the last index of conflictTerm
-	rf.nextIndex[peer] = maxInt(1, i)
+	rf.nextIndex[peer] = max(1, i+1)
 	return
 }
