@@ -13,14 +13,13 @@ func (rf *Raft) electionRoutine() {
 		if time.Since(rf.electionTimeoutBaseline) > rf.electionTimeoutDuration {
 			if rf.role != leader {
 				rf.doElection()
-				goto SLEEP
+				time.Sleep(CheckInterval)
+				continue
 			} else {
 				rf.electionTimeoutBaseline = time.Now()
 			}
 		}
 		rf.mu.Unlock()
-		goto SLEEP
-	SLEEP:
 		time.Sleep(CheckInterval)
 	}
 }
@@ -94,7 +93,7 @@ func (rf *Raft) doElection() {
 				rf.mu.Unlock()
 				return
 			}
-			
+
 			if reply.VoteGranted {
 				approveCount += 1
 			}

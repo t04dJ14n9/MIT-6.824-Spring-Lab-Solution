@@ -22,12 +22,8 @@ func (rf *Raft) appendEntryRoutine() {
 
 			// reset last check time disregarding role
 			rf.appendEntryBaseline = time.Now()
-
-			rf.mu.Unlock()
-			goto SLEEP
 		}
 		rf.mu.Unlock()
-	SLEEP:
 		time.Sleep(CheckInterval)
 	}
 }
