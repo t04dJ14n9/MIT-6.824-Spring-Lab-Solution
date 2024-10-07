@@ -40,8 +40,8 @@ func (rf *Raft) doElection() {
 	args := RequestVoteArgs{
 		Term:         rf.currentTerm,
 		CandidateID:  rf.me,
-		LastLogIndex: rf.getLastLogIndex(),
-		LastLogTerm:  rf.getLastLogTerm(),
+		LastLogIndex: rf.getLogicLastLogIndex(),
+		LastLogTerm:  rf.getLogicLastLogTerm(),
 	}
 
 	// save the currentTerm
@@ -110,7 +110,7 @@ func (rf *Raft) doElection() {
 
 			// did not receive the majority of vote and all replies was received
 			if receivedCount == len(rf.peers) {
-				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote. ")
+				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote.", rf.me)
 				DPrint(logMsg)
 				rf.mu.Unlock()
 				return
@@ -128,7 +128,7 @@ func (rf *Raft) leaderInitialization() {
 
 	// initialize nextIndex and matchIndex for each peer
 	for peer := 0; peer < len(rf.peers); peer += 1 {
-		rf.nextIndex[peer] = rf.getLastLogIndex() + 1
+		rf.nextIndex[peer] = rf.getLogicLastLogIndex() + 1
 		rf.matchIndex[peer] = 0
 	}
 	// trigger leader election

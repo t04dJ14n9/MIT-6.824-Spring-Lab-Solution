@@ -61,6 +61,10 @@ type Raft struct {
 	matchIndex []int // index of highest log entry known to be replicated on server
 
 	applyChan chan ApplyMsg // the apply channel for the application layer
+
+	snapshot          []byte // last stored snapshot
+	lastIncludedIndex int    // index of the last entry in snapshot
+	lastIncludedTerm  int    // term of the last entry in snapshot
 }
 
 // the service using Raft (e.g. a k/v server) wants to start
@@ -88,7 +92,7 @@ func (rf *Raft) Start(command interface{}) (index int, term int, isLeader bool) 
 		Term:    rf.currentTerm,
 	}
 	rf.log = append(rf.log, le)
-	index = rf.getLastLogIndex()
+	index = rf.getLogicLastLogIndex()
 	term = rf.currentTerm
 	rf.persist()
 	DPrintf("Peer[%d]: start consensus with command %v, logEntry %v, index %v", rf.me, command, le, index)
@@ -131,17 +135,20 @@ func (rf *Raft) Kill() {
 func Make(peers []*labrpc.ClientEnd, me int,
 	persister *Persister, applyCh chan ApplyMsg) *Raft {
 	rf := &Raft{
-		peers:       peers,
-		persister:   persister,
-		me:          me,
-		role:        follower,
-		currentTerm: 0,
-		votedFor:    -1,
-		log:         make([]LogEntry, 1),
-		commitIndex: 0,
-		lastApplied: 0,
-		applyChan:   applyCh,
+		peers:             peers,
+		persister:         persister,
+		me:                me,
+		role:              follower,
+		currentTerm:       0,
+		votedFor:          -1,
+		log:               make([]LogEntry, 1),
+		commitIndex:       0,
+		lastApplied:       0,
+		applyChan:         applyCh,
+		lastIncludedIndex: -1,
+		lastIncludedTerm:  -1,
 	}
+	// dummy log entry, used as sentinel
 	rf.log[0].Command = nil
 	rf.log[0].Term = 0
 

@@ -59,3 +59,15 @@ type AppendEntriesReply struct {
 	ConflictTerm  int  // the term of the conflicting entry
 	ConflictIndex int  // the index of the first entry for ConflictTerm
 }
+
+type InstallSnapshotArgs struct {
+	LastIncludedIndex int
+	LastIncludedTerm  int
+	LeaderID          int
+	Term              int // leader's term
+	Snapshot          []byte
+}
+
+type InstallSnapshotReply struct {
+	Term int // currentTerm, for leader to update itself
+}

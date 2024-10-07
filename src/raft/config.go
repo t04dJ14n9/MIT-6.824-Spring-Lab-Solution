@@ -221,6 +221,7 @@ func (cfg *config) applierSnap(i int, applyCh chan ApplyMsg) {
 				e := labgob.NewEncoder(w)
 				v := m.Command
 				e.Encode(v)
+				DPrintf("!!!!! Peer[%d].Snapshot(commandIndex=%v)", i, m.CommandIndex)
 				cfg.rafts[i].Snapshot(m.CommandIndex, w.Bytes())
 			}
 		} else {

@@ -11,8 +11,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote reply = %+v", rf.me, args.CandidateID, reply)
 		DPrint(logMsg)
 	}()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote received: %+v",
-		args.CandidateID, rf.me, *args)
+	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote received: %+v, lastIncludedIndex=%v, lastIncludedTerm=%v",
+		args.CandidateID, rf.me, *args, rf.lastIncludedIndex, rf.lastIncludedTerm)
 
 	// if RPC request with higher term received, convert to follower
 	if args.Term > rf.currentTerm {
@@ -49,8 +49,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	}
 
 	// if candidate's log is not as up-to-date as receiver's log, reject
-	if args.LastLogTerm == rf.getLastLogTerm() && args.LastLogIndex < rf.getLastLogIndex() || // same term, higher last index means more up-to-date
-		args.LastLogTerm < rf.getLastLogTerm() { // different term, higher term means more up-to-date
+	if args.LastLogTerm == rf.getLogicLastLogTerm() && args.LastLogIndex < rf.getLogicLastLogIndex() || // same term, higher last index means more up-to-date
+		args.LastLogTerm < rf.getLogicLastLogTerm() { // different term, higher term means more up-to-date
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: candidate's log is not as up-to-date as receiver's log, reject", rf.me)
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
@@ -78,8 +78,11 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 		logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: AppendEntry reply = %+v", rf.me, args.LeaderID, reply)
 		DPrint(logMsg)
 	}()
-	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: Receive AppendEntries: %+v", args.LeaderID, rf.me, args)
+	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: Receive AppendEntries: %+v, lastIncludedIndex=%v, lastIncludedTerm=%v",
+		args.LeaderID, rf.me, args, rf.lastIncludedIndex, rf.lastIncludedTerm)
 
+	//If RPC request or response contains term T > currentTerm:
+	//set currentTerm = T, convert to follower (§5.1)
 	if args.Term > rf.currentTerm {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: AppendEntries with a higher term received. Current Term: %v Received Term: %v", rf.me, rf.currentTerm, args.Term)
 		rf.role = follower
@@ -111,55 +114,59 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// reset election timeout only when:
 	// 1. begin another round of election (follower timeout or candidate start another round of election)
 	// 2. receive appendEntry RPC only from leader of **current term**
-	logMsg = AddToLogMsg(logMsg, "Peer[%d]: resetting election timeout for receiving append entries from leader of current term", rf.me)
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 
-	// does not contain an index at prevLogIndex
-	if rf.getLastLogIndex() < args.PrevLogIndex {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d", rf.me,
-			args.PrevLogIndex, args.PrevLogTerm)
-		reply.Success = false
-		reply.Term = rf.currentTerm
-		reply.ConflictIndex = rf.getLastLogIndex()
-		reply.ConflictTerm = -1 // indicating non-existent
-		return
-	}
-
-	// contain an index at prevLogIndex but term does not match
-	if rf.log[args.PrevLogIndex].Term != args.PrevLogTerm {
-		logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d", rf.me,
-			args.PrevLogIndex, args.PrevLogTerm)
-		reply.Success = false
-		reply.Term = rf.currentTerm
-		reply.ConflictTerm = rf.log[args.PrevLogIndex].Term
-		// set conflictIndex to be the index of the first entry with ConflictTerm
-		conflictIndex := args.PrevLogIndex
-		for conflictIndex > 0 && rf.log[conflictIndex].Term == reply.ConflictTerm {
-			conflictIndex--
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: log=%v, lastIncludedIndex=%v, lastIncludedTerm=%v", rf.me, rf.log, rf.lastIncludedIndex, rf.lastIncludedTerm)
+	if !(rf.lastIncludedIndex == args.PrevLogIndex && rf.lastIncludedTerm == args.PrevLogTerm) {
+		// does not contain an index at prevLogIndex
+		if rf.LogicIndex2RealIndex(args.PrevLogIndex) < 0 || rf.LogicIndex2RealIndex(args.PrevLogIndex) >= len(rf.log) {
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex=%d", rf.me,
+				args.PrevLogIndex)
+			reply.Success = false
+			reply.Term = rf.currentTerm
+			reply.ConflictIndex = rf.getLogicLastLogIndex()
+			reply.ConflictTerm = -1 // indicating non-existent
+			return
 		}
-		reply.ConflictIndex = conflictIndex + 1
-		return
+
+		// contain an index at prevLogIndex but term does not match
+		if rf.log[rf.LogicIndex2RealIndex(args.PrevLogIndex)].Term != args.PrevLogTerm {
+			logMsg = AddToLogMsg(logMsg, "Peer[%d]: does not contain an entry at prevLogIndex whose term matches prevLogTerm. prevLogIndex: %d, prevLogTerm: %d", rf.me,
+				args.PrevLogIndex, args.PrevLogTerm)
+			reply.Success = false
+			reply.Term = rf.currentTerm
+			reply.ConflictTerm = rf.log[rf.LogicIndex2RealIndex(args.PrevLogIndex)].Term
+			// set conflictIndex to be the index of the first entry with ConflictTerm
+			conflictIndex := args.PrevLogIndex
+			for rf.LogicIndex2RealIndex(conflictIndex) >= 0 && rf.log[rf.LogicIndex2RealIndex(conflictIndex)].Term == reply.ConflictTerm {
+				conflictIndex--
+			}
+			reply.ConflictIndex = conflictIndex + 1
+			return
+		}
 	}
+	logMsg = AddToLogMsg(logMsg, "log before: %v", rf.log)
 
 	// if an existing entry conflicts with a new one, delete the existing entry and all that follow it
-	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i < rf.getLogLength(); i++ {
+	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i <= rf.getLogicLastLogIndex(); i++ {
 		// Log Matching Property ensures that if index and term are the same, all log entries up through this index is the same
-		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[i].Term { //|| args.Entries[i-args.PrevLogIndex-1].Command != rf.log[i].Command {
+		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[rf.LogicIndex2RealIndex(i)].Term {
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: remove log after %d-th index", rf.me, i)
-			rf.log = rf.log[:i]
+			rf.log = append([]LogEntry{}, rf.log[:rf.LogicIndex2RealIndex(i)]...)
 			rf.persist()
 		}
 	}
 	// Append log entries in args
 	rf.applyEntriesToLog(args.Entries, args.PrevLogIndex)
 
+	logMsg = AddToLogMsg(logMsg, "log after: %v", rf.log)
 	rf.persist()
 
 	// update commitIndex
 	if args.LeaderCommit > rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
-		rf.commitIndex = min(rf.getLastLogIndex(), args.LeaderCommit)
+		rf.commitIndex = min(rf.getLogicLastLogIndex(), args.LeaderCommit)
 	}
 	reply.Term = rf.currentTerm
 	reply.Success = true
@@ -170,11 +177,55 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 func (rf *Raft) applyEntriesToLog(entries []LogEntry, prevLogIndex int) {
 	for i := 0; i < len(entries); i++ {
 		indexToInsert := prevLogIndex + i + 1
-		if indexToInsert >= len(rf.log) {
+		if rf.LogicIndex2RealIndex(indexToInsert) >= len(rf.log) {
 			rf.log = append(rf.log, entries[i])
 			continue
 		}
-		rf.log[indexToInsert] = entries[i]
+		rf.log[rf.LogicIndex2RealIndex(indexToInsert)] = entries[i]
 	}
+	return
+}
+
+func (rf *Raft) InstallSnapshot(arg *InstallSnapshotArgs, reply *InstallSnapshotReply) {
+	rf.mu.Lock()
+	defer rf.mu.Unlock()
+
+	logMsg := ""
+	defer func() {
+		logMsg = AddToLogMsg(logMsg, "InstallSnapshot reply = %+v", reply)
+		DPrint(logMsg)
+	}()
+	logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: InstallSnapshot args: %+v", arg.LeaderID, rf.me, arg)
+
+	reply.Term = rf.currentTerm
+
+	if arg.Term < rf.currentTerm {
+		logMsg = AddToLogMsg(logMsg, "arg.Term=%v < rf.currentTerm=%v, reject.", arg.Term, rf.currentTerm)
+		return
+	}
+
+	if arg.Term > rf.currentTerm {
+		logMsg = AddToLogMsg(logMsg, "updating term: %v => %v", rf.currentTerm, arg.Term)
+		rf.role = follower
+		rf.currentTerm = arg.Term
+		rf.votedFor = -1
+		rf.persist()
+	}
+
+	rf.electionTimeoutBaseline = time.Now()
+	rf.resetElectionTimeoutDuration()
+
+	if arg.LastIncludedIndex <= rf.commitIndex {
+		logMsg = AddToLogMsg(logMsg, "commitIndex=%v >= arg.lastIncludedIndex=%v", rf.commitIndex, arg.LastIncludedIndex)
+		return
+	}
+	snapshotMsg := ApplyMsg{
+		SnapshotValid: true,
+		SnapshotIndex: arg.LastIncludedIndex,
+		SnapshotTerm:  arg.LastIncludedTerm,
+		Snapshot:      arg.Snapshot,
+	}
+	logMsg = AddToLogMsg(logMsg, "Peer[%d]: applyMsg sent %+v", rf.me, snapshotMsg)
+	go func() { rf.applyChan <- snapshotMsg }()
 	return
 }

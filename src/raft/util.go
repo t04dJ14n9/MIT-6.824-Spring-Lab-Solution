@@ -36,22 +36,35 @@ func AddToLogMsg(logMsg string, format string, a ...interface{}) string {
 	return logMsg + fmt.Sprintf(format+"\n"+"                ", a...)
 }
 
-// Get the last index of self's log, to be modified to adapt to snapshot
-// TODO: if add lock around res it cannot proceed
+// Get the last index of self's log
 func (rf *Raft) getLastLogIndex() int {
-	res := len(rf.log) - 1
-	return res
+	return len(rf.log) - 1
 }
 
-// Get the last term of self's log, to be modified to adapt to snapshot
-// TODO: if add lock around res it cannot proceed
+// Get the last term of self's log
 func (rf *Raft) getLastLogTerm() int {
-	res := rf.log[rf.getLastLogIndex()].Term
-	return res
+	return rf.log[rf.getLastLogIndex()].Term
 }
 
-func (rf *Raft) getLogLength() int {
-	return len(rf.log)
+// Get the last index of self's log, considering previous installed snapshot
+func (rf *Raft) getLogicLastLogIndex() int {
+	return len(rf.log) + rf.lastIncludedIndex
+}
+
+// Get the last term of self's log, considering previous installed snapshot
+func (rf *Raft) getLogicLastLogTerm() int {
+	if len(rf.log) == 0 {
+		return rf.lastIncludedTerm
+	}
+	return rf.log[rf.getLastLogIndex()].Term
+}
+
+func (rf *Raft) LogicIndex2RealIndex(logicIndex int) int {
+	return logicIndex - rf.lastIncludedIndex - 1
+}
+
+func (rf *Raft) RealIndex2LogicIndex(realIndex int) int {
+	return realIndex + rf.lastIncludedIndex + 1
 }
 
 // example code to send a RequestVote RPC to a server.
@@ -90,6 +103,12 @@ func (rf *Raft) sendRequestVote(server int, args *RequestVoteArgs, reply *Reques
 func (rf *Raft) sendAppendEntries(server int, args *AppendEntriesArgs, reply *AppendEntriesReply) bool {
 	DPrintf("Peer[%d] => Peer[%d]: AppendEntry args %+v", rf.me, server, args)
 	ok := rf.peers[server].Call("Raft.AppendEntries", args, reply)
+	return ok
+}
+
+func (rf *Raft) sendInstallSnapshot(server int, args *InstallSnapshotArgs, reply *InstallSnapshotReply) bool {
+	DPrintf("Peer[%d] => Peer[%d]: InstallSnapshot args %+v", rf.me, server, args)
+	ok := rf.peers[server].Call("Raft.InstallSnapshot", args, reply)
 	return ok
 }
 
