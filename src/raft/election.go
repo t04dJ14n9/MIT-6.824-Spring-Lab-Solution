@@ -5,7 +5,7 @@ import "time"
 // The electionRoutine go routine starts a new election if this peer hasn't received
 // heartsbeats recently.
 func (rf *Raft) electionRoutine() {
-	// Your code here to check if a leader election should
+	// check if a leader election should
 	// be started and to randomize sleeping time using
 	// time.Sleep().
 	for !rf.killed() {
@@ -131,6 +131,4 @@ func (rf *Raft) leaderInitialization() {
 		rf.nextIndex[peer] = rf.getLastLogicalLogIndex() + 1
 		rf.matchIndex[peer] = 0
 	}
-	// trigger leader election
-	rf.appendEntryBaseline = time.Time{}
 }
