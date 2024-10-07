@@ -40,8 +40,8 @@ func (rf *Raft) doElection() {
 	args := RequestVoteArgs{
 		Term:         rf.currentTerm,
 		CandidateID:  rf.me,
-		LastLogIndex: rf.getLogicLastLogIndex(),
-		LastLogTerm:  rf.getLogicLastLogTerm(),
+		LastLogIndex: rf.getLastLogicalLogIndex(),
+		LastLogTerm:  rf.getLastLogicalLogTerm(),
 	}
 
 	// save the currentTerm
@@ -128,7 +128,7 @@ func (rf *Raft) leaderInitialization() {
 
 	// initialize nextIndex and matchIndex for each peer
 	for peer := 0; peer < len(rf.peers); peer += 1 {
-		rf.nextIndex[peer] = rf.getLogicLastLogIndex() + 1
+		rf.nextIndex[peer] = rf.getLastLogicalLogIndex() + 1
 		rf.matchIndex[peer] = 0
 	}
 	// trigger leader election

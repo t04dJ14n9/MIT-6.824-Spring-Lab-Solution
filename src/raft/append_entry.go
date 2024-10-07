@@ -138,7 +138,7 @@ func (rf *Raft) updateCommitIndex() {
 	sortedList := make([]int, len(rf.peers))
 	for i := 0; i < len(rf.peers); i++ {
 		if i == rf.me {
-			sortedList[i] = rf.getLogicLastLogIndex()
+			sortedList[i] = rf.getLastLogicalLogIndex()
 		} else {
 			sortedList[i] = rf.matchIndex[i]
 		}

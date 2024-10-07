@@ -49,8 +49,8 @@ func (rf *Raft) RequestVote(args *RequestVoteArgs, reply *RequestVoteReply) {
 	}
 
 	// if candidate's log is not as up-to-date as receiver's log, reject
-	if args.LastLogTerm == rf.getLogicLastLogTerm() && args.LastLogIndex < rf.getLogicLastLogIndex() || // same term, higher last index means more up-to-date
-		args.LastLogTerm < rf.getLogicLastLogTerm() { // different term, higher term means more up-to-date
+	if args.LastLogTerm == rf.getLastLogicalLogTerm() && args.LastLogIndex < rf.getLastLogicalLogIndex() || // same term, higher last index means more up-to-date
+		args.LastLogTerm < rf.getLastLogicalLogTerm() { // different term, higher term means more up-to-date
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: candidate's log is not as up-to-date as receiver's log, reject", rf.me)
 		reply.Term = rf.currentTerm
 		reply.VoteGranted = false
@@ -125,7 +125,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 				args.PrevLogIndex)
 			reply.Success = false
 			reply.Term = rf.currentTerm
-			reply.ConflictIndex = rf.getLogicLastLogIndex()
+			reply.ConflictIndex = rf.getLastLogicalLogIndex()
 			reply.ConflictTerm = -1 // indicating non-existent
 			return
 		}
@@ -149,7 +149,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	logMsg = AddToLogMsg(logMsg, "log before: %v", rf.log)
 
 	// if an existing entry conflicts with a new one, delete the existing entry and all that follow it
-	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i <= rf.getLogicLastLogIndex(); i++ {
+	for i := args.PrevLogIndex + 1; i < args.PrevLogIndex+len(args.Entries)+1 && i <= rf.getLastLogicalLogIndex(); i++ {
 		// Log Matching Property ensures that if index and term are the same, all log entries up through this index is the same
 		if args.Entries[i-args.PrevLogIndex-1].Term != rf.log[rf.LogicIndex2RealIndex(i)].Term {
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: remove log after %d-th index", rf.me, i)
@@ -166,7 +166,7 @@ func (rf *Raft) AppendEntries(args *AppendEntriesArgs, reply *AppendEntriesReply
 	// update commitIndex
 	if args.LeaderCommit > rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "Peer[%d]: updating commitIndex: %d => %d", rf.me, rf.commitIndex, args.LeaderCommit)
-		rf.commitIndex = min(rf.getLogicLastLogIndex(), args.LeaderCommit)
+		rf.commitIndex = min(rf.getLastLogicalLogIndex(), args.LeaderCommit)
 	}
 	reply.Term = rf.currentTerm
 	reply.Success = true
@@ -215,10 +215,12 @@ func (rf *Raft) InstallSnapshot(arg *InstallSnapshotArgs, reply *InstallSnapshot
 	rf.electionTimeoutBaseline = time.Now()
 	rf.resetElectionTimeoutDuration()
 
+	// reject old snapshot
 	if arg.LastIncludedIndex <= rf.commitIndex {
 		logMsg = AddToLogMsg(logMsg, "commitIndex=%v >= arg.lastIncludedIndex=%v", rf.commitIndex, arg.LastIncludedIndex)
 		return
 	}
+
 	snapshotMsg := ApplyMsg{
 		SnapshotValid: true,
 		SnapshotIndex: arg.LastIncludedIndex,
@@ -226,6 +228,9 @@ func (rf *Raft) InstallSnapshot(arg *InstallSnapshotArgs, reply *InstallSnapshot
 		Snapshot:      arg.Snapshot,
 	}
 	logMsg = AddToLogMsg(logMsg, "Peer[%d]: applyMsg sent %+v", rf.me, snapshotMsg)
-	go func() { rf.applyChan <- snapshotMsg }()
+
+	go func() {
+		rf.applyChan <- snapshotMsg
+	}()
 	return
 }

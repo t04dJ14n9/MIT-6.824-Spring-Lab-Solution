@@ -47,12 +47,12 @@ func (rf *Raft) getLastLogTerm() int {
 }
 
 // Get the last index of self's log, considering previous installed snapshot
-func (rf *Raft) getLogicLastLogIndex() int {
+func (rf *Raft) getLastLogicalLogIndex() int {
 	return len(rf.log) + rf.lastIncludedIndex
 }
 
 // Get the last term of self's log, considering previous installed snapshot
-func (rf *Raft) getLogicLastLogTerm() int {
+func (rf *Raft) getLastLogicalLogTerm() int {
 	if len(rf.log) == 0 {
 		return rf.lastIncludedTerm
 	}

@@ -12,7 +12,7 @@ func (rf *Raft) CondInstallSnapshot(lastIncludedTerm int, lastIncludedIndex int,
 		DPrintf("Peer[%d]: rf.commitIndex >= snapshot.lastIncludedIndex, reject", rf.me)
 		return false
 	}
-	if rf.getLogicLastLogIndex() > lastIncludedIndex {
+	if rf.getLastLogicalLogIndex() > lastIncludedIndex {
 		rf.log = append([]LogEntry{}, rf.log[rf.LogicIndex2RealIndex(lastIncludedIndex)+1:]...)
 	} else {
 		rf.log = []LogEntry{}
@@ -39,8 +39,8 @@ func (rf *Raft) Snapshot(index int, snapshot []byte) {
 	defer rf.mu.Unlock()
 
 	DPrintf("Peer[%d]: do Snapshot. index=%v, realIndex=%v, len(rf.log)=%v", rf.me, index, rf.LogicIndex2RealIndex(index), len(rf.log))
-	if index > rf.getLogicLastLogIndex() {
-		DPrintf("Peer[%d]: Snapshot() with index=%v > logicLastIndex=%v", rf.me, index, rf.getLogicLastLogIndex())
+	if index > rf.getLastLogicalLogIndex() {
+		DPrintf("Peer[%d]: Snapshot() with index=%v > logicLastIndex=%v", rf.me, index, rf.getLastLogicalLogIndex())
 		return
 	}
 	rf.lastIncludedTerm = rf.log[rf.LogicIndex2RealIndex(index)].Term
