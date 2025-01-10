@@ -1,9 +1,12 @@
 package kvraft
 
+import "time"
+
 const (
 	OK             = "OK"
 	ErrNoKey       = "ErrNoKey"
 	ErrWrongLeader = "ErrWrongLeader"
+	ErrRaft        = "ErrRaft"
 )
 
 type Err string
@@ -16,6 +19,8 @@ type PutAppendArgs struct {
 	// You'll have to add definitions here.
 	// Field names must start with capital letters,
 	// otherwise RPC will break.
+	SeqID    int
+	ClientID int64 // used for uniquely determine a client
 }
 
 type PutAppendReply struct {
@@ -23,11 +28,16 @@ type PutAppendReply struct {
 }
 
 type GetArgs struct {
-	Key string
-	// You'll have to add definitions here.
+	Key      string
+	SeqID    int
+	ClientID int64 // used for uniquely determine a client
 }
 
 type GetReply struct {
 	Err   Err
 	Value string
 }
+
+const (
+	CheckInterval = 10 * time.Millisecond
+)

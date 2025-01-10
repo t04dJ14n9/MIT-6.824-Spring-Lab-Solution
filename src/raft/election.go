@@ -57,13 +57,16 @@ func (rf *Raft) doElection() {
 			var reply RequestVoteReply
 			ok := rf.sendRequestVote(peer, &args, &reply)
 			rf.mu.Lock()
+			defer rf.mu.Unlock()
+
+			logMsg := ""
+			defer func() { DPrint(logMsg) }()
+
 			receivedCount += 1
 			if !ok {
-				DPrintf("Peer[%d] => Peer[%d]: RequestVote failed", rf.me, peer)
-				rf.mu.Unlock()
+				logMsg = AddToLogMsg(logMsg, "Peer[%d] => Peer[%d]: RequestVote failed", rf.me, peer)
 				return
 			}
-			logMsg := ""
 			logMsg = AddToLogMsg(logMsg, "Peer[%d]: received reply %+v", rf.me, reply)
 
 			// if a reply with higher term is received, turn to follower
@@ -73,24 +76,18 @@ func (rf *Raft) doElection() {
 				rf.votedFor = -1
 				rf.persist()
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: reply with higher term received. candidate => follower", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
 				return
 			}
 
 			// if no longer candidate while waiting for requestVote reply,
 			if rf.role != candidate {
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: not candidate when receiving reply", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
 				return
 			}
 
 			// if term changed while waiting for reply, abort election
 			if savedTerm != rf.currentTerm {
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: term changed while waiting, abort election", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
 				return
 			}
 
@@ -103,20 +100,14 @@ func (rf *Raft) doElection() {
 			if approveCount > len(rf.peers)/2 {
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: wins election. candidate => leader.", rf.me)
 				rf.leaderInitialization()
-				DPrint(logMsg)
-				rf.mu.Unlock()
 				return
 			}
 
 			// did not receive the majority of vote and all replies was received
 			if receivedCount == len(rf.peers) {
 				logMsg = AddToLogMsg(logMsg, "Peer[%d]: received all requestVote replies but did not got majority of vote.", rf.me)
-				DPrint(logMsg)
-				rf.mu.Unlock()
 				return
 			}
-			DPrint(logMsg)
-			rf.mu.Unlock()
 		}()
 	}
 }

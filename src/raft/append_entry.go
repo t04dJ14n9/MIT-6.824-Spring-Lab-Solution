@@ -12,7 +12,8 @@ func (rf *Raft) appendEntryRoutine() {
 		if time.Since(rf.appendEntryBaseline) > rf.appendEntryDuration {
 			// if is leader, start append entry for each peer
 			if rf.role == leader {
-				DPrintf("Peer[%d]: sending Appentry for each peer. rf.NextIndex=%+v, rf.lastIncludedIndex=%v", rf.me, rf.nextIndex, rf.lastIncludedIndex)
+				DPrintf("Peer[%d]: sending Appentry for each peer. rf.NextIndex=%+v, rf.lastIncludedIndex=%v", rf.me,
+					rf.nextIndex, rf.lastIncludedIndex)
 				for peer := 0; peer < len(rf.peers); peer++ {
 					if peer == rf.me {
 						continue
@@ -76,7 +77,8 @@ func (rf *Raft) doInstallSnapshotForPeer(peer int) {
 
 func (rf *Raft) doAppendEntryForPeer(peer int) {
 	// copy log to send.
-	// since the testing env is simulated on local machine, if logToSend is not copied, race condition will happen since no lock is held in rf.sendAppendEntries
+	// since the testing env is simulated on local machine, if logToSend is not copied, race condition will happen since no lock
+	// is held in rf.sendAppendEntries
 	logToSend := rf.log[rf.LogicIndex2RealIndex(rf.nextIndex[peer]):]
 	logToSendCopies := make([]LogEntry, len(logToSend))
 	saveTerm := rf.currentTerm
@@ -157,7 +159,8 @@ func (rf *Raft) updateCommitIndex() {
 }
 
 func (rf *Raft) updateNextIndex(peer int, arg *AppendEntriesArgs, conflictIndex int, conflictTerm int) {
-	DPrintf("Updating Peer[%d].nextIndex[%d]=%v, conflictIndex=%v, conflictTerm=%v", rf.me, peer, rf.nextIndex[peer], conflictIndex, conflictTerm)
+	DPrintf("Updating Peer[%d].nextIndex[%d]=%v, conflictIndex=%v, conflictTerm=%v", rf.me, peer, rf.nextIndex[peer],
+		conflictIndex, conflictTerm)
 	// case 1, conflictTerm is larger or -1(None), impossible to get that term using backtracking
 	if rf.LogicIndex2RealIndex(arg.PrevLogIndex) < 0 || rf.LogicIndex2RealIndex(arg.PrevLogIndex) >= len(rf.log) ||
 		conflictTerm > rf.log[rf.LogicIndex2RealIndex(arg.PrevLogIndex)].Term || conflictTerm <= 0 {
